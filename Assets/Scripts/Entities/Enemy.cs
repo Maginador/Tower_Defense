@@ -75,7 +75,8 @@ namespace Entities
         {
             //TODO Add animations and effects
             Destroy(gameObject);
-            PlayerData.Instance.GiveGold(data.reward);
+            PlayerData.Instance.GiveGold(data.goldReward);
+            PlayerData.Instance.AddExperience(data.xpReward);
         }
     }
 }

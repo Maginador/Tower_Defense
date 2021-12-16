@@ -7,6 +7,7 @@ namespace ScriptableObjects
     {
         public int health, defense, attack, speed;
         public GameObject enemyPrefab;
-        public int reward;
+        public int goldReward;
+        public int xpReward;
     }
 }

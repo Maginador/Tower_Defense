@@ -9,12 +9,14 @@ public class InGameUIController : MonoBehaviour
 {
 
     [SerializeField]
-    private Text goldUI;
+    private Text goldUI, xpUI, lvlUI;
 
     public void Start()
     {
         PlayerData.Instance.AddOnGoldChangedListener(UpdateGoldUI);
-        goldUI.text = PlayerData.Instance.CurrentGoldAmount().ToString();
+        PlayerData.Instance.AddOnXPChangedListener(UpdateXpUI);
+        UpdateGoldUI();
+        UpdateXpUI();
 
     }
 
@@ -22,4 +24,9 @@ public class InGameUIController : MonoBehaviour
     {
         goldUI.text = PlayerData.Instance.CurrentGoldAmount().ToString();
     }
+    
+    public void UpdateXpUI()
+    {
+        xpUI.text = PlayerData.Instance.CurrentXp().ToString();
+        lvlUI.text = PlayerData.Instance.CurrentLvl().ToString();    }
 }

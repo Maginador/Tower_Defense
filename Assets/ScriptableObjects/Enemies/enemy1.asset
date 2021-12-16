@@ -18,4 +18,5 @@ MonoBehaviour:
   speed: 1
   enemyPrefab: {fileID: 9075336333588120170, guid: dce896c71a7b347d1b163878d218b5d2,
     type: 3}
-  reward: 10
+  goldReward: 10
+  xpReward: 10

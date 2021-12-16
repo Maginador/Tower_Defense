@@ -11,6 +11,7 @@ namespace Controllers
         private PlayerPersistentData _data;
         private int _currentGold;
         private UnityEvent _onGoldChanged;
+        private UnityEvent _onXPChanged;
         public Base baseEntity;
 
         public void Awake()
@@ -22,6 +23,7 @@ namespace Controllers
             Instance = this;
             
             _onGoldChanged = new UnityEvent();
+            _onXPChanged = new UnityEvent();
         }
 
         public void Start()
@@ -36,6 +38,13 @@ namespace Controllers
         public void RemoveOnGoldChangedListener(UnityAction listener)
         {
             _onGoldChanged.RemoveListener(listener);
+        }public void AddOnXPChangedListener(UnityAction listener)
+        {
+            _onXPChanged.AddListener(listener);
+        }
+        public void RemoveOnXPChangedListener(UnityAction listener)
+        {
+            _onXPChanged.RemoveListener(listener);
         }
         
 
@@ -66,6 +75,22 @@ namespace Controllers
         public int CurrentGoldAmount()
         {
             return _currentGold;
+        }
+
+        public void AddExperience(int xp)
+        {
+            _data.SetExperience(xp);
+            _onXPChanged.Invoke();
+        }
+
+        public int CurrentXp()
+        {
+            return _data.Experience;
+        }
+        
+        public int CurrentLvl()
+        {
+            return _data.Level;
         }
     }
 }

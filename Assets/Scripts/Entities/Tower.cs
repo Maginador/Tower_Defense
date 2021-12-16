@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -43,7 +44,14 @@ namespace Entities
             if (targetList.Count > 0)
             {
                 if(towerHead && targetList.Count > 0)
-                    towerHead.LookAt(targetList[0].transform);
+                    try
+                    {
+                        towerHead.LookAt(targetList[0].transform);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
             }
         }
 
