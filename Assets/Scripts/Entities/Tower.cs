@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Controllers;
 using ScriptableObjects;
@@ -15,13 +16,21 @@ namespace Entities
         public GameObject rangeMeter;
         public float timer;
 
-        private List<GameObject> targetList;
+        private List<GameObject> _targetList;
+        private bool _blockTower = false;
+
         public int level=1;
         public Color[] colorUpgradeTable;
         public int upgradeCost;
 
         public void Update()
         {
+            if (_blockTower)
+            {
+                LookUp();
+                return;
+                
+            }
             ValidateTarget();
             LookAt();
             if (timer <= Time.time)
@@ -33,7 +42,7 @@ namespace Entities
 
         public void Awake()
         {
-            targetList = new List<GameObject>();
+            _targetList = new List<GameObject>();
         }
 
         public void Start()
@@ -43,7 +52,7 @@ namespace Entities
 
         private void Shoot()
         {
-            if (targetList.Count > 0)
+            if (_targetList.Count > 0)
             {
                var bullet = Instantiate(data.projectile,bulletSpawnSpot.position,towerHead.rotation).GetComponent<Bullet>();
                bullet.power = Mathf.FloorToInt(data.attackPower * level * data.upgradeStatsMultiplier);
@@ -52,12 +61,12 @@ namespace Entities
 
         private void LookAt()
         {
-            if (targetList.Count > 0)
+            if (_targetList.Count > 0)
             {
-                if(towerHead && targetList.Count > 0)
+                if(towerHead && _targetList.Count > 0)
                     try
                     {
-                        towerHead.LookAt(targetList[0].transform);
+                        towerHead.LookAt(_targetList[0].transform);
                     }
                     catch (Exception e)
                     {
@@ -65,25 +74,45 @@ namespace Entities
                     }
             }
         }
+        
+        private void LookUp()
+        {
+            towerHead.LookAt(towerHead.position + Vector3.up);
+        }
 
+        
 
         private void ValidateTarget()
         {
-            if (targetList.Count > 0)
+            if (_targetList.Count > 0)
             {
-                if (targetList[0] == null)
+                if (_targetList[0] == null)
                 {
-                    targetList.RemoveAt(0);
+                    _targetList.RemoveAt(0);
                 }
             }
         }
-        public void Upgrade()
+        public void StartUpgrade()
+        {
+            StartCoroutine(UpgradeDelay());
+            
+        }
+
+        private IEnumerator UpgradeDelay()
+        {
+            _blockTower = true;
+            yield return new WaitForSeconds(5); //TODO add parameter to change easier and make it permanently upgradeable
+            _blockTower = false;
+
+            DoUpgrade();
+        }
+
+        private void DoUpgrade()
         {
             level++;
             ChangeVisual();
             PlayerData.Instance.SpendGold(upgradeCost);
-            upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);
-        }
+            upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);        }
 
         private void ChangeVisual()
         {
@@ -94,9 +123,9 @@ namespace Entities
         {
             if (other.CompareTag("Enemy"))
             {
-                if (!targetList.Contains(other.gameObject))
+                if (!_targetList.Contains(other.gameObject))
                 {
-                    targetList.Add(other.gameObject);
+                    _targetList.Add(other.gameObject);
                 }
             }
         }
@@ -104,9 +133,9 @@ namespace Entities
         public void OnTriggerExit(Collider other)
         {
 
-            if (targetList.Contains(other.gameObject))
+            if (_targetList.Contains(other.gameObject))
             {
-                targetList.Remove(other.gameObject);
+                _targetList.Remove(other.gameObject);
             }
         }
     }

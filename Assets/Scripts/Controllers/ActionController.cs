@@ -46,10 +46,11 @@ public class ActionController : MonoBehaviour
     {
         if (PlayerData.Instance.HasEnoughGold(selectedTower.upgradeCost))
         {
-            selectedTower.Upgrade();
+            selectedTower.StartUpgrade();
             HideUpgradeUI();
         }
     }
+
 
     private void MouseAction()
     {
