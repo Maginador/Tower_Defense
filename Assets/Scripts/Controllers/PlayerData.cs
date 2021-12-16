@@ -11,7 +11,8 @@ namespace Controllers
         private PlayerPersistentData _data;
         private int _currentGold;
         private UnityEvent _onGoldChanged;
-        private UnityEvent _onXPChanged;
+        private UnityEvent _onXpChanged;
+        private UnityEvent _onHcChanged;
         public Base baseEntity;
 
         public void Awake()
@@ -23,7 +24,8 @@ namespace Controllers
             Instance = this;
             
             _onGoldChanged = new UnityEvent();
-            _onXPChanged = new UnityEvent();
+            _onXpChanged = new UnityEvent();
+            _onHcChanged = new UnityEvent();
         }
 
         public void Start()
@@ -31,6 +33,10 @@ namespace Controllers
             SetData(Game.PlayerPersistentData);
         }
 
+        public void AddOnHCChangedListener(UnityAction listener)
+        {
+            _onHcChanged.AddListener(listener);
+        }
         public void AddOnGoldChangedListener(UnityAction listener)
         {
             _onGoldChanged.AddListener(listener);
@@ -40,11 +46,11 @@ namespace Controllers
             _onGoldChanged.RemoveListener(listener);
         }public void AddOnXPChangedListener(UnityAction listener)
         {
-            _onXPChanged.AddListener(listener);
+            _onXpChanged.AddListener(listener);
         }
         public void RemoveOnXPChangedListener(UnityAction listener)
         {
-            _onXPChanged.RemoveListener(listener);
+            _onXpChanged.RemoveListener(listener);
         }
         
 
@@ -80,7 +86,7 @@ namespace Controllers
         public void AddExperience(int xp)
         {
             _data.SetExperience(xp);
-            _onXPChanged.Invoke();
+            _onXpChanged.Invoke();
         }
 
         public int CurrentXp()
@@ -91,6 +97,23 @@ namespace Controllers
         public int CurrentLvl()
         {
             return _data.Level;
+        }
+
+        public bool HasEnoughHC(int hc)
+        {
+            return _data.HardCurrency >= hc;;
+        }
+
+        public void SpendHC(int cost)
+        {
+            _data.HardCurrency -= cost;
+            _onHcChanged.Invoke();
+
+        }
+
+        public int CurrentHCAmount()
+        {
+            return _data.HardCurrency;
         }
     }
 }

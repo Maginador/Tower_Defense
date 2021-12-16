@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -16,15 +17,16 @@ namespace Entities
         public float timer;
 
         private List<GameObject> _targetList;
-        private bool _blockTower = false;
-
+        private bool _towerUpgrading = false;
+        private Coroutine _coroutine;
         public int level=1;
         public Color[] colorUpgradeTable;
         public int upgradeCost;
+        public float upgradeTimer;
 
         public void Update()
         {
-            if (_blockTower)
+            if (_towerUpgrading)
             {
                 LookUp();
                 return;
@@ -93,15 +95,15 @@ namespace Entities
         }
         public void StartUpgrade()
         {
-            StartCoroutine(UpgradeDelay());
-            
+            _coroutine = StartCoroutine(UpgradeDelay());
         }
 
         private IEnumerator UpgradeDelay()
         {
-            _blockTower = true;
-            yield return new WaitForSeconds(5); //TODO add parameter to change easier and make it permanently upgradeable
-            _blockTower = false;
+            _towerUpgrading = true;
+            upgradeTimer = Time.time + 10;
+            yield return new WaitForSeconds(10); //TODO add parameter to change easier and make it permanently upgradeable
+            _towerUpgrading = false;
 
             DoUpgrade();
         }
@@ -135,6 +137,18 @@ namespace Entities
             {
                 _targetList.Remove(other.gameObject);
             }
+        }
+
+        public bool IsUpgrading()
+        {
+            return _towerUpgrading;
+        }
+
+        public void SpeedUp()
+        {
+            _towerUpgrading = false;
+            StopCoroutine(_coroutine);
+            DoUpgrade();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ScriptableObjects
     {
         public int initialCost;
         public int attackPower, attackRange;
-        public float attackDelay,upgradeCostMultiplier, upgradeStatsMultiplier;
+        public float attackDelay,upgradeCostMultiplier, upgradeStatsMultiplier, speedUpMultiplier;
         public GameObject projectile;
         public string textName;
         public GameObject prefab;
