@@ -2,7 +2,7 @@ using System.Collections;
 using ScriptableObjects;
 using UnityEngine;
 
-public class PlayerData
+public class PlayerPersistentData
 {
    //Add list of boosts 
    //Add list of stats 
@@ -10,7 +10,7 @@ public class PlayerData
    public int _initialGold;
    public TowerData[] towers;
 
-   public PlayerData(TowerData[] data, int initialGold)
+   public PlayerPersistentData(TowerData[] data, int initialGold)
    {
       towers = data;
       _initialGold = initialGold;

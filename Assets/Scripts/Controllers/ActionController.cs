@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
 
 public class ActionController : MonoBehaviour
@@ -16,7 +17,7 @@ public class ActionController : MonoBehaviour
 
     private void SetupBuildUI()
     {
-        buildUI.BuildTexts(Game.PlayerData);
+        buildUI.BuildTexts(Game.PlayerPersistentData);
     }
 
     private void Update()
@@ -25,8 +26,14 @@ public class ActionController : MonoBehaviour
     }
     public void SetTower(int tower)
     {
-       var t = Instantiate(Game.PlayerData.towers[tower].prefab,towerPosition,Quaternion.identity).GetComponent<Tower>();
-       t.data = Game.PlayerData.towers[tower];
+        var towerData = Game.PlayerPersistentData.towers[tower];
+        if (PlayerData.Instance.HasEnoughGold(towerData.initialCost))
+        {
+            var t = Instantiate(towerData.prefab,towerPosition,Quaternion.identity).GetComponent<Tower>();
+            t.data = towerData;
+            PlayerData.Instance.SpendGold(towerData.initialCost);
+        }
+      
     }
 
     private void MouseAction()

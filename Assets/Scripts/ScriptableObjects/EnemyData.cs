@@ -6,6 +6,7 @@ namespace ScriptableObjects
     public class EnemyData : ScriptableObject
     {
         public int health, defense, attack, speed;
-        public GameObject enemyPrefab; 
+        public GameObject enemyPrefab;
+        public int reward;
     }
 }

@@ -8,11 +8,11 @@ public class BuildUI : MonoBehaviour
 
     [SerializeField] private Text[] towers;
 
-    public void BuildTexts(PlayerData data)
+    public void BuildTexts(PlayerPersistentData persistentData)
     {
         for(int i =0; i<towers.Length; i++)
         {
-            towers[i].text = data.towers[i].textName;
+            towers[i].text = persistentData.towers[i].textName;
             
         }
         
