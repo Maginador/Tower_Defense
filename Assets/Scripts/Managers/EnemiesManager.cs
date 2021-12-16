@@ -94,6 +94,8 @@ namespace Managers
         public void RemoveEnemyFromList(Enemy enemy)
         {
             enemies.Remove(enemy);
+            LevelController.Instance.SetSpawnedEnemies(enemies.Count);
+
         }
     }
 }
