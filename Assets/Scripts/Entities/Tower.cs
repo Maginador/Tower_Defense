@@ -101,8 +101,9 @@ namespace Entities
         private IEnumerator UpgradeDelay()
         {
             _towerUpgrading = true;
-            upgradeTimer = Time.time + 10;
-            yield return new WaitForSeconds(10); //TODO add parameter to change easier and make it permanently upgradeable
+            var time = level * 5;
+            upgradeTimer = Time.time + time;
+            yield return new WaitForSeconds(time); //TODO add parameter to change easier and make it permanently upgradeable
             _towerUpgrading = false;
 
             DoUpgrade();

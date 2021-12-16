@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Tower1
   m_EditorClassIdentifier: 
   initialCost: 50
-  upgradeMultiplier: 0
   attackPower: 1
   attackRange: 0
   attackDelay: 0.5
+  upgradeCostMultiplier: 1.5
+  upgradeStatsMultiplier: 2
+  speedUpMultiplier: 0.3
   projectile: {fileID: 583142155059956579, guid: 61d428fc4d45b49df96b00c6c646382b,
     type: 3}
   textName: 1
