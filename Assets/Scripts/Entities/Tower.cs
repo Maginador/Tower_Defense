@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Controllers;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -111,7 +110,6 @@ namespace Entities
         {
             level++;
             ChangeVisual();
-            PlayerData.Instance.SpendGold(upgradeCost);
             upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);        }
 
         private void ChangeVisual()

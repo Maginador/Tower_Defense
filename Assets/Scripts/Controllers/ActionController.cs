@@ -47,6 +47,7 @@ public class ActionController : MonoBehaviour
         if (PlayerData.Instance.HasEnoughGold(selectedTower.upgradeCost))
         {
             selectedTower.StartUpgrade();
+            PlayerData.Instance.SpendGold(selectedTower.upgradeCost);
             HideUpgradeUI();
         }
     }
