@@ -28,8 +28,9 @@ namespace Managers
         }
         public void Start()
         {
+            
             enemies = new List<Enemy>();
-            spawnSpot = LevelController.instance.startPoint.transform.position;
+            spawnSpot = LevelController.instance.startPoint.transform.position + Vector3.up;
             SpawnEnemy(0);
         }
 
