@@ -84,7 +84,7 @@ namespace Managers
 
         public void Update()
         {
-            if (currentWave +1 >= LevelController.Instance.data.waves && enemies.Count == 0)
+            if (currentWave +1 >= LevelController.Instance.data.waves && enemies.Count == 0 && enemiesSpawned >= LevelController.Instance.data.enemiesPerWave[currentWave] )
             {
                 LevelController.Instance.ShowWinScreen();
 
