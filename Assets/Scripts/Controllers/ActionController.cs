@@ -8,6 +8,7 @@ public class ActionController : MonoBehaviour
 
     public Camera cam;
     public BuildUI buildUI;
+    public LayerMask mask;
     private Vector3 towerPosition;
 
     private void Start()
@@ -42,7 +43,7 @@ public class ActionController : MonoBehaviour
         var dir = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.farClipPlane));
         RaycastHit hit = default;
         if(Input.GetButtonDown("Fire1")){
-            if (Physics.Raycast(origin, dir, out hit))
+            if (Physics.Raycast(origin, dir, out hit,100,mask))
             {
                 if (hit.collider.CompareTag("TowerSpot"))
                 {
