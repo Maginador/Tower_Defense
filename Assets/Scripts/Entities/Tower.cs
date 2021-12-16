@@ -42,7 +42,7 @@ namespace Entities
         {
             if (targetList.Count > 0)
             {
-                if(towerHead)
+                if(towerHead && targetList.Count > 0)
                     towerHead.LookAt(targetList[0].transform);
             }
         }
