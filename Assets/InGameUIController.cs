@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Controllers;
+using Managers;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,5 +62,26 @@ public class InGameUIController : MonoBehaviour
     public void ShowLoseScreen()
     {
         loseScreen.SetActive(true);
+    }
+
+    public void Pause()
+    {
+        TimeManager.Instance.StopGame();
+    }
+
+    public void ChangeGameSpeed(int time)
+    {
+        switch (time)
+        {
+            case 1 : 
+                TimeManager.Instance.SetDefaultTime();
+                break;
+            case 2 : 
+                TimeManager.Instance.Set2XTime();
+                break;
+            case 3 : 
+                TimeManager.Instance.Set3XTime();
+                break;
+        }
     }
 }
