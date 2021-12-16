@@ -1,17 +1,17 @@
-using System;
 using Controllers;
+using Interfaces;
 using ScriptableObjects;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Entities
 {
-    public class Enemy:MonoBehaviour
+    public class Enemy:MonoBehaviour,IDamageable
     {
         private const float Threshold = .1f;
         public EnemyData data;
         public int health;
         public int currentPoint;
-        private Vector3 currentTarget;
+        private Vector3 _currentTarget;
         
         public void Start()
         {
@@ -25,16 +25,16 @@ namespace DefaultNamespace
             Move();
         }
 
-        public void GetNewTarget()
+        private void GetNewTarget()
         {
             currentPoint++;
-            currentTarget = LevelController.Instance.waypoints[currentPoint].position;
+            _currentTarget = LevelController.Instance.waypoints[currentPoint].position;
             
         }
-        
-        public void Move()
+
+        private void Move()
         {
-            if (Vector3.Distance(currentTarget, transform.position) < Threshold)
+            if (Vector3.Distance(_currentTarget, transform.position) < Threshold)
             {
                 if(currentPoint <= LevelController.Instance.waypoints.Count-2)
                 {
@@ -47,14 +47,14 @@ namespace DefaultNamespace
             }
             else
             {
-                var dir = (currentTarget - transform.position).normalized;
+                var dir = (_currentTarget - transform.position).normalized;
                 transform.Translate(dir * (data.speed * Time.deltaTime),Space.World);
             }
         }
 
-        public void Attack()
+        private void Attack()
         {
-            
+            PlayerData.Instance.baseEntity.TakeDamage(data.attack); //TODO look for close elements instead of directly the base to make it possible to have blockers
         }
 
         public void TakeDamage(int damage )
@@ -66,10 +66,15 @@ namespace DefaultNamespace
             }
         }
 
-        private void Die()
+        public void RecoverHealth(int recover)
+        {
+            health += recover;
+        }
+
+        public void Die()
         {
             //TODO Add animations and effects
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             PlayerData.Instance.GiveGold(data.reward);
         }
     }

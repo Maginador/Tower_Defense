@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Controllers;
+using Entities;
 using UnityEngine;
 
 public class ActionController : MonoBehaviour
@@ -10,7 +11,7 @@ public class ActionController : MonoBehaviour
     public BuildUI buildUI;
     public LayerMask mask;
     private Vector3 towerPosition;
-
+    
     private void Start()
     {
         SetupBuildUI();
@@ -42,9 +43,11 @@ public class ActionController : MonoBehaviour
         var origin = cam.transform.position;
         var dir = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.farClipPlane));
         RaycastHit hit = default;
+        Debug.DrawRay(origin, dir);
         if(Input.GetButtonDown("Fire1")){
             if (Physics.Raycast(origin, dir, out hit,100,mask))
             {
+                Debug.Log(hit.collider.name);
                 if (hit.collider.CompareTag("TowerSpot"))
                 {
                     ShowBuildUI(hit.transform);

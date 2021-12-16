@@ -109,6 +109,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
+  health: 0
+  currentPoint: 0
 --- !u!54 &5921606831362483222
 Rigidbody:
   m_ObjectHideFlags: 0

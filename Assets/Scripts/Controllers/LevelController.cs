@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entities;
 using UnityEngine;
 using UnityEngine.WSA;
 
@@ -73,6 +74,9 @@ namespace Controllers
             if (tile == Tiles.SpawnSpot)
             {
                 startPoint = obj;
+            }else if (tile == Tiles.EndSpot)
+            {
+                PlayerData.Instance.baseEntity = obj.GetComponent<Base>();
             }
         }
 

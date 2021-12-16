@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialCost: 50
   upgradeMultiplier: 0
-  attackPower: 0
+  attackPower: 1
   attackRange: 0
   attackDelay: 5
   projectile: {fileID: 583142155059956579, guid: 61d428fc4d45b49df96b00c6c646382b,

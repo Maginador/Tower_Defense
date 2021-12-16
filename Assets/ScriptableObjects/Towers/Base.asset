@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a347f4f5a9e54ffea793c056a962188a, type: 3}
-  m_Name: Tower1
+  m_Name: Base
   m_EditorClassIdentifier: 
-  initialCost: 50
-  upgradeMultiplier: 0
-  attackPower: 1
-  attackRange: 0
-  attackDelay: 0.5
+  initialCost: 0
+  upgradeMultiplier: -1
+  attackPower: 5
+  attackRange: 4
+  attackDelay: 2
   projectile: {fileID: 583142155059956579, guid: 61d428fc4d45b49df96b00c6c646382b,
     type: 3}
-  textName: 1
-  prefab: {fileID: 9120988095440367357, guid: 3be7b4ece6ac44e1ca5b034b8dde3b52, type: 3}
+  textName: Base
+  prefab: {fileID: 0}

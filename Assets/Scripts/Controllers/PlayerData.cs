@@ -1,4 +1,5 @@
 using System;
+using Entities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,8 @@ namespace Controllers
         private PlayerPersistentData _data;
         private int _currentGold;
         private UnityEvent _onGoldChanged;
+        public Base baseEntity;
+
         public void Awake()
         {
             if (Instance != null)

@@ -14,5 +14,8 @@ public class PlayerPersistentData
    {
       towers = data;
       _initialGold = initialGold;
+      BaseHealth = 100;
    }
+
+   public readonly int BaseHealth;
 }
