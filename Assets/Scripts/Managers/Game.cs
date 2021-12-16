@@ -23,5 +23,4 @@ public class Game : MonoBehaviour
 
     public static PlayerPersistentData PlayerPersistentData { get; set; }
     
-    
 }

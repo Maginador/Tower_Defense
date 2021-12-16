@@ -1,25 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entities;
+using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.WSA;
 
 namespace Controllers
 {
     public class LevelController : MonoBehaviour
     {
+        public LevelData data;
         public GameObject[] floor;
         public Color[] colorTable;
-        public Texture2D levelMap;
         public GameObject startPoint;
         public int startPointIndex;
         public GameObject waypoint;
         public List<Transform> waypoints;
         public static LevelController Instance;
-    
+        private UnityEvent _onWaveChanged;
+        private UnityEvent _onEnemiesQuantityChanged;
+
+        [SerializeField] private InGameUIController uiController;
         //Path Builder Variables
         private int[,] _levelMatrix;
         private int _width, _height;
+
+
+        private int _wave;
+        private int _enemies;
         public void Awake()
         {
             if (Instance != null)
@@ -27,21 +36,23 @@ namespace Controllers
                 Destroy(Instance);
             }
             Instance = this;
-
+            _onWaveChanged = new UnityEvent();
+            _onEnemiesQuantityChanged = new UnityEvent();
             PrepareLevel();
         }
 
         public void PrepareLevel()
         {
-            _width = levelMap.width;
-            _height = levelMap.height;
+            
+            _width = data.levelMap.width;
+            _height = data.levelMap.height;
             _levelMatrix = new int[_width, _height];
 
             for (int i = 0; i < _width; i++)
             {
                 for (int o = 0; o < _height; o++)
                 {
-                    var tile = SelectTile(levelMap.GetPixel(i, o));
+                    var tile = SelectTile(data.levelMap.GetPixel(i, o));
                     _levelMatrix[i, o] = tile;
                     if (tile == Tiles.SpawnSpot)
                     {
@@ -133,6 +144,53 @@ namespace Controllers
         {
            var point =  Instantiate(waypoint, new Vector3(x, 1, y), Quaternion.identity);
            waypoints.Add(point.transform);
+        }
+
+        public int CurrentWave()
+        {
+            return _wave;
+        }
+
+        public int CurrentQuantityOfEnemies()
+        {
+            return _enemies;
+        }
+
+        public void AddOnWaveChangedListener(UnityAction action)
+        {
+            _onWaveChanged.AddListener(action);
+        }
+        
+        public void AddOnEnemiesQuantityChangedListener(UnityAction action)
+        {
+            _onEnemiesQuantityChanged.AddListener(action);
+        }
+
+        public void ShowWinScreen()
+        {
+            uiController.ShowWinScreen();
+        }
+        
+        public void ShowLoseScreen()
+        {
+            uiController.ShowLoseScreen();
+        }
+
+        public void SetWave(int currentWave)
+        {
+            _wave = currentWave;
+            _onWaveChanged.Invoke();
+        }
+
+        public void SetSpawnedEnemies(int enemiesCount)
+        {
+            _enemies = enemiesCount;
+            _onEnemiesQuantityChanged.Invoke();
+        }
+
+        public int GetMaxWaves()
+        {
+            return data.waves;
         }
     }
 

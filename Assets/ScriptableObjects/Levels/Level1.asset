@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31f3664970f8476ba15e97277934f77, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: 
+  levelMap: {fileID: 2800000, guid: 6590eee6a1b7d4220a66a25b0309fd93, type: 3}
+  waves: 4
+  enemiesPerWave: 050000000a0000000f0000001e000000
+  enemiesInLevel:
+  - {fileID: 11400000, guid: 4f22e44ddae7f4ccaa4501a63dc79d8c, type: 2}
+  midBosses: 0
+  boss: 0

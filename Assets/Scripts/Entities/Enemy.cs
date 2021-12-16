@@ -1,5 +1,6 @@
 using Controllers;
 using Interfaces;
+using Managers;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -7,16 +8,19 @@ namespace Entities
 {
     public class Enemy:MonoBehaviour,IDamageable
     {
-        private const float Threshold = .1f;
         public EnemyData data;
-        public int health;
-        public int currentPoint;
+        public int currentWaypoint;
+        public EnemiesManager manager;
+
+        private int _health;
         private Vector3 _currentTarget;
-        
+        private float _attackTimer;
+        private const float Threshold = .1f;
+
         public void Start()
         {
-            health = data.health;
-            currentPoint = -1;
+            _health = data.health;
+            currentWaypoint = -1;
             GetNewTarget();
         }
 
@@ -27,8 +31,8 @@ namespace Entities
 
         private void GetNewTarget()
         {
-            currentPoint++;
-            _currentTarget = LevelController.Instance.waypoints[currentPoint].position;
+            currentWaypoint++;
+            _currentTarget = LevelController.Instance.waypoints[currentWaypoint].position;
             
         }
 
@@ -36,7 +40,7 @@ namespace Entities
         {
             if (Vector3.Distance(_currentTarget, transform.position) < Threshold)
             {
-                if(currentPoint <= LevelController.Instance.waypoints.Count-2)
+                if(currentWaypoint <= LevelController.Instance.waypoints.Count-2)
                 {
                     GetNewTarget();
                 }
@@ -54,13 +58,17 @@ namespace Entities
 
         private void Attack()
         {
-            PlayerData.Instance.baseEntity.TakeDamage(data.attack); //TODO look for close elements instead of directly the base to make it possible to have blockers
+            if (_attackTimer < Time.time)
+            {
+                _attackTimer = Time.time + 2;
+                PlayerData.Instance.baseEntity.TakeDamage(data.attack); //TODO look for close elements instead of directly the base to make it possible to have blockers
+            }
         }
 
         public void TakeDamage(int damage )
         {
-            health -= damage;
-            if (health <= 0)
+            _health -= damage;
+            if (_health <= 0)
             {
                 Die();
             }
@@ -68,15 +76,17 @@ namespace Entities
 
         public void RecoverHealth(int recover)
         {
-            health += recover;
+            _health += recover;
         }
 
         public void Die()
         {
             //TODO Add animations and effects
-            Destroy(gameObject);
+            manager.RemoveEnemyFromList(this);
             PlayerData.Instance.GiveGold(data.goldReward);
             PlayerData.Instance.AddExperience(data.xpReward);
+            Destroy(gameObject);
+
         }
     }
 }

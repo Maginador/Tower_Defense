@@ -14,7 +14,7 @@ public class PlayerPersistentData
    {
       towers = data;
       _initialGold = initialGold;
-      BaseHealth = 100;
+      BaseHealth = 5;
       TimeToRecover = 120;
       ConstantHealthRecovered = 1;
       ConstantGoldProduction = 1;

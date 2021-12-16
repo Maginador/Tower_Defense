@@ -19,6 +19,10 @@ namespace Entities
         public void TakeDamage(int damage)
         {
             _health -= damage;
+            if (_health <= 0)
+            {
+                Die();
+            }
         }
 
         public void RecoverHealth(int recover)
@@ -30,6 +34,7 @@ namespace Entities
         {
             //TODO Game Over Screen, animations and effects
             Destroy(gameObject);
+            LevelController.Instance.ShowLoseScreen();
         }
 
         private void ProduceGold()
