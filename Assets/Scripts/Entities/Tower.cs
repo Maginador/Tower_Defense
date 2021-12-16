@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Controllers;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -15,6 +16,10 @@ namespace Entities
         public float timer;
 
         private List<GameObject> targetList;
+        public int level=1;
+        public Color[] colorUpgradeTable;
+        public int upgradeCost;
+
         public void Update()
         {
             ValidateTarget();
@@ -31,11 +36,17 @@ namespace Entities
             targetList = new List<GameObject>();
         }
 
+        public void Start()
+        {
+            upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);
+        }
+
         private void Shoot()
         {
             if (targetList.Count > 0)
             {
-                Instantiate(data.projectile,bulletSpawnSpot.position,towerHead.rotation);
+               var bullet = Instantiate(data.projectile,bulletSpawnSpot.position,towerHead.rotation).GetComponent<Bullet>();
+               bullet.power = Mathf.FloorToInt(data.attackPower * level * data.upgradeStatsMultiplier);
             }
         }
 
@@ -68,7 +79,15 @@ namespace Entities
         }
         public void Upgrade()
         {
-        
+            level++;
+            ChangeVisual();
+            PlayerData.Instance.SpendGold(upgradeCost);
+            upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);
+        }
+
+        private void ChangeVisual()
+        {
+            towerHead.GetComponent<Renderer>().material.color = colorUpgradeTable[level];
         }
 
         public void OnTriggerEnter(Collider other)

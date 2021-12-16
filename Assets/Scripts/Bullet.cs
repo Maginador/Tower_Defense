@@ -7,6 +7,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public int speed = 100;
+
+    public int power;
+
     // Update is called once per frame
     void Update()
     {
@@ -20,7 +23,7 @@ public class Bullet : MonoBehaviour
 
     public void DoDamage(Enemy enemy)
     {
-        enemy.TakeDamage(1); //TODO apply damage from tower persistentData
+        enemy.TakeDamage(power); //TODO apply damage from tower persistentData
     }
 
     public void OnTriggerEnter(Collider other)

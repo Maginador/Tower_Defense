@@ -9,9 +9,11 @@ public class ActionController : MonoBehaviour
 
     public Camera cam;
     public BuildUI buildUI;
+    public UpgradeUI upgradeUI;
     public LayerMask mask;
     private Vector3 towerPosition;
-    
+    private GameObject lastClickedObject;
+    private Tower selectedTower;
     private void Start()
     {
         SetupBuildUI();
@@ -34,8 +36,19 @@ public class ActionController : MonoBehaviour
             var t = Instantiate(towerData.prefab,towerPosition,Quaternion.identity).GetComponent<Tower>();
             t.data = towerData;
             PlayerData.Instance.SpendGold(towerData.initialCost);
+            lastClickedObject.SetActive(false);
+            HideBuildUI();
         }
       
+    }
+
+    public void UpgradeTower()
+    {
+        if (PlayerData.Instance.HasEnoughGold(selectedTower.upgradeCost))
+        {
+            selectedTower.Upgrade();
+            HideUpgradeUI();
+        }
     }
 
     private void MouseAction()
@@ -52,15 +65,37 @@ public class ActionController : MonoBehaviour
                 {
                     ShowBuildUI(hit.transform);
                     towerPosition = hit.transform.position;
-                }else if (!hit.collider.CompareTag("UI"))
+                    lastClickedObject = hit.transform.gameObject;
+                    HideUpgradeUI();
+                }else if (hit.collider.CompareTag("Tower"))
+                {
+                    selectedTower = hit.transform.GetComponent<Tower>();
+                    ShowUpgradeUI(selectedTower, hit.transform); //TODO look for a way to cash tower data to avoid get components
+                    HideBuildUI();
+                }
+                else if (!hit.collider.CompareTag("UI"))
                 {
                     HideBuildUI();
+                    HideUpgradeUI();
                 }
             }else
             {
                 HideBuildUI();
+                HideUpgradeUI();
             }
         }
+        
+    }
+
+    private void ShowUpgradeUI(Tower component, Transform hitTransform)
+    {
+        upgradeUI.gameObject.transform.position = hitTransform.position;
+        upgradeUI.BuildTexts(component);
+        upgradeUI.gameObject.SetActive(true);
+    }
+    private void HideUpgradeUI()
+    {
+        upgradeUI.gameObject.SetActive(false);
         
     }
 
