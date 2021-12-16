@@ -17,7 +17,7 @@ public class Tower : MonoBehaviour
     private List<GameObject> targetList;
     public void Update()
     {
-        CheckRange();
+        ValidateTarget();
         LookAt();
         if (timer <= Time.time)
         {
@@ -49,9 +49,15 @@ public class Tower : MonoBehaviour
     }
 
 
-    public void CheckRange()
+    public void ValidateTarget()
     {
-        
+        if (targetList.Count > 0)
+        {
+            if (targetList[0] == null)
+            {
+                targetList.RemoveAt(0);
+            }
+        }
     }
     public void Upgrade()
     {
@@ -60,7 +66,6 @@ public class Tower : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TESTE1");
         if (other.CompareTag("Enemy"))
         {
             if (!targetList.Contains(other.gameObject))
@@ -72,7 +77,6 @@ public class Tower : MonoBehaviour
 
     public void OnTriggerExit(Collider other)
     {
-        Debug.Log("TESTE2");
 
         if (targetList.Contains(other.gameObject))
         {

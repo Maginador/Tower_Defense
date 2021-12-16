@@ -18,6 +18,7 @@ namespace Managers
         {
 
             var enemy = Instantiate(enemiesData[selectedEnemy].enemyPrefab,spawnSpot,Quaternion.identity).GetComponent<Enemy>();
+            enemy.data = enemiesData[selectedEnemy];
             enemies.Add(enemy);
         }
 
