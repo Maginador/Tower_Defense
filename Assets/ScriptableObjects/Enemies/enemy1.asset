@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcaf71f3f7340d880063186a3b93c97, type: 3}
   m_Name: enemy1
   m_EditorClassIdentifier: 
-  health: 0
-  defense: 0
-  attack: 0
-  speed: 0
-  enemyPrefab: {fileID: 0}
+  health: 10
+  defense: 1
+  attack: 1
+  speed: 1
+  enemyPrefab: {fileID: 9075336333588120170, guid: dce896c71a7b347d1b163878d218b5d2,
+    type: 3}
