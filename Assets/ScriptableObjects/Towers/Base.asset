@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dcaf71f3f7340d880063186a3b93c97, type: 3}
-  m_Name: enemy1
+  m_Script: {fileID: 11500000, guid: a347f4f5a9e54ffea793c056a962188a, type: 3}
+  m_Name: Base
   m_EditorClassIdentifier: 
-  health: 10
-  defense: 1
-  attack: 1
-  speed: 1
-  enemyPrefab: {fileID: 9075336333588120170, guid: dce896c71a7b347d1b163878d218b5d2,
+  initialCost: 0
+  upgradeMultiplier: -1
+  attackPower: 5
+  attackRange: 4
+  attackDelay: 2
+  projectile: {fileID: 583142155059956579, guid: 61d428fc4d45b49df96b00c6c646382b,
     type: 3}
-  goldReward: 10
-  xpReward: 10
+  textName: Base
+  prefab: {fileID: 0}

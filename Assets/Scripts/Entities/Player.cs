@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-   private PlayerData data;
+   private PlayerPersistentData _persistentData;
 
 
    public void GetPlayerData()
    {
-      data = Game.PlayerData;
+      _persistentData = Game.PlayerPersistentData;
    }
 
 }

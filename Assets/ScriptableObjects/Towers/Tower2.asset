@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a347f4f5a9e54ffea793c056a962188a, type: 3}
   m_Name: Tower2
   m_EditorClassIdentifier: 
-  initialCost: 0
+  initialCost: 50
   upgradeMultiplier: 0
-  attackPower: 0
-  attackDelay: 5
+  attackPower: 1
   attackRange: 0
+  attackDelay: 5
   projectile: {fileID: 583142155059956579, guid: 61d428fc4d45b49df96b00c6c646382b,
     type: 3}
   textName: 2

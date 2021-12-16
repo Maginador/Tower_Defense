@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controllers;
+using Entities;
 using UnityEngine;
 
 public class ActionController : MonoBehaviour
@@ -7,8 +9,9 @@ public class ActionController : MonoBehaviour
 
     public Camera cam;
     public BuildUI buildUI;
+    public LayerMask mask;
     private Vector3 towerPosition;
-
+    
     private void Start()
     {
         SetupBuildUI();
@@ -16,7 +19,7 @@ public class ActionController : MonoBehaviour
 
     private void SetupBuildUI()
     {
-        buildUI.BuildTexts(Game.PlayerData);
+        buildUI.BuildTexts(Game.PlayerPersistentData);
     }
 
     private void Update()
@@ -25,8 +28,14 @@ public class ActionController : MonoBehaviour
     }
     public void SetTower(int tower)
     {
-       var t = Instantiate(Game.PlayerData.towers[tower].prefab,towerPosition,Quaternion.identity).GetComponent<Tower>();
-       t.data = Game.PlayerData.towers[tower];
+        var towerData = Game.PlayerPersistentData.towers[tower];
+        if (PlayerData.Instance.HasEnoughGold(towerData.initialCost))
+        {
+            var t = Instantiate(towerData.prefab,towerPosition,Quaternion.identity).GetComponent<Tower>();
+            t.data = towerData;
+            PlayerData.Instance.SpendGold(towerData.initialCost);
+        }
+      
     }
 
     private void MouseAction()
@@ -34,9 +43,11 @@ public class ActionController : MonoBehaviour
         var origin = cam.transform.position;
         var dir = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.farClipPlane));
         RaycastHit hit = default;
+        Debug.DrawRay(origin, dir);
         if(Input.GetButtonDown("Fire1")){
-            if (Physics.Raycast(origin, dir, out hit))
+            if (Physics.Raycast(origin, dir, out hit,100,mask))
             {
+                Debug.Log(hit.collider.name);
                 if (hit.collider.CompareTag("TowerSpot"))
                 {
                     ShowBuildUI(hit.transform);

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "Data", menuName = "Scriptable Objects/Tower", order = 1)]
+    [CreateAssetMenu(fileName = "Data", menuName = "Scriptable Objects/Base", order = 1)]
     public class TowerData : ScriptableObject
     {
         public int initialCost, upgradeMultiplier;

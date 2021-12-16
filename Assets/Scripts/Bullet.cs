@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DefaultNamespace;
+using Entities;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int speed = 1;
+    public int speed = 100;
     // Update is called once per frame
     void Update()
     {
@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
 
     public void DoDamage(Enemy enemy)
     {
-        enemy.TakeDamage(1); //TODO apply damage from tower data
+        enemy.TakeDamage(1); //TODO apply damage from tower persistentData
     }
 
     public void OnTriggerEnter(Collider other)

@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    //mocked data 
+    //mocked persistentData 
     [SerializeField] private TowerData[] towers;
     [SerializeField] private int initialGold;
     public void Awake()
     {
-        if (PlayerData == null)
+        if (PlayerPersistentData == null)
         {
-            PlayerData = GetPlayerData();
+            PlayerPersistentData = GetPlayerData();
         }
     }
 
-    private PlayerData GetPlayerData()
+    private PlayerPersistentData GetPlayerData()
     {
-        //TODO: check if there is stored data to recover or create a new user 
-        return new PlayerData(towers,initialGold);
+        //TODO: check if there is stored persistentData to recover or create a new user 
+        return new PlayerPersistentData(towers,initialGold);
     }
 
-    public static PlayerData PlayerData { get; set; }
+    public static PlayerPersistentData PlayerPersistentData { get; set; }
     
     
 }

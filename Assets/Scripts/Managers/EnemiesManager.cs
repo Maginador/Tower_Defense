@@ -1,7 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Controllers;
-using DefaultNamespace;
+using Entities;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -30,8 +31,18 @@ namespace Managers
         {
             
             enemies = new List<Enemy>();
-            spawnSpot = LevelController.instance.startPoint.transform.position + Vector3.up;
-            SpawnEnemy(0);
+            spawnSpot = LevelController.Instance.startPoint.transform.position + Vector3.up;
+            StartCoroutine(WaveRunner());
+        }
+
+        private IEnumerator WaveRunner()
+        {
+            yield return new WaitForSeconds(3);
+            while (true)
+            {
+                SpawnEnemy(0); //TODO grab data about what and how many enemies to spawn from level scriptable object 
+                yield return new WaitForSeconds(3); //TODO set timer variable that can be changed with upgrade
+            }
         }
 
         public void Update()

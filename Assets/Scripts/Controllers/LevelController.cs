@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entities;
 using UnityEngine;
 using UnityEngine.WSA;
 
@@ -14,17 +15,18 @@ namespace Controllers
         public int startPointIndex;
         public GameObject waypoint;
         public List<Transform> waypoints;
-        public static LevelController instance;
+        public static LevelController Instance;
     
         //Path Builder Variables
         private int[,] _levelMatrix;
         private int _width, _height;
         public void Awake()
         {
-            if (instance == null)
+            if (Instance != null)
             {
-                instance = this;
+                Destroy(Instance);
             }
+            Instance = this;
 
             PrepareLevel();
         }
@@ -72,12 +74,15 @@ namespace Controllers
             if (tile == Tiles.SpawnSpot)
             {
                 startPoint = obj;
+            }else if (tile == Tiles.EndSpot)
+            {
+                PlayerData.Instance.baseEntity = obj.GetComponent<Base>();
             }
         }
 
         public void BuildPath()
         {
-            //TODO Change algorithm and data structure to support multiple paths 
+            //TODO Change algorithm and persistentData structure to support multiple paths 
             //TODO create a helper call to fix broken level textures (textures that do not have complete paths for example) 
             var y = Mathf.FloorToInt(startPointIndex / (float)_height);
             var x = startPointIndex % _height;
