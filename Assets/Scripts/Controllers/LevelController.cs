@@ -112,7 +112,7 @@ namespace Controllers
             }
             if (b == Tiles.Path)
             {
-                CheckNeighbours(x-1  +(y-1)*_height);
+                CheckNeighbours(x  +(y-1)*_height);
             }
             if (c == Tiles.Path)
             {

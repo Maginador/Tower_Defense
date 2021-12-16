@@ -36,7 +36,7 @@ namespace DefaultNamespace
         {
             if (Vector3.Distance(currentTarget, transform.position) < Threshold)
             {
-                if(currentPoint <= LevelController.instance.waypoints.Count)
+                if(currentPoint <= LevelController.instance.waypoints.Count-2)
                 {
                     GetNewTarget();
                 }
