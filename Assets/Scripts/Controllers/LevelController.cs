@@ -129,13 +129,6 @@ namespace Controllers
            var point =  Instantiate(waypoint, new Vector3(x, 1, y), Quaternion.identity);
            waypoints.Add(point.transform);
         }
-
-        public void BuildWaypoints()
-        {
-        
-        }
-    
-    
     }
 
     public class Tiles
