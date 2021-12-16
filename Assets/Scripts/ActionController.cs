@@ -6,13 +6,23 @@ public class ActionController : MonoBehaviour
 {
 
     public Camera cam;
-    public GameObject buildUI;
+    public BuildUI buildUI;
+
+    public void Start()
+    {
+        SetupBuildUI();
+    }
+
+    private void SetupBuildUI()
+    {
+        buildUI.BuildTexts(Game.PlayerData);
+    }
 
     public void Update()
     {
         MouseAction();
     }
-    public void SetTower()
+    public void SetTower(int tower)
     {
         
     }
@@ -42,12 +52,13 @@ public class ActionController : MonoBehaviour
 
     private void HideBuildUI()
     {
-        buildUI.SetActive(false);
+        buildUI.gameObject.SetActive(false);
+        
     }
 
     private void ShowBuildUI(Transform hitTransform)
     {
-        buildUI.transform.position = hitTransform.position;
-        buildUI.SetActive(true);
+        buildUI.gameObject.transform.position = hitTransform.position;
+        buildUI.gameObject.SetActive(true);
     }
 }
