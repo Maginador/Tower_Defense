@@ -7,8 +7,9 @@ public class ActionController : MonoBehaviour
 
     public Camera cam;
     public BuildUI buildUI;
+    private Vector3 towerPosition;
 
-    public void Start()
+    private void Start()
     {
         SetupBuildUI();
     }
@@ -18,16 +19,17 @@ public class ActionController : MonoBehaviour
         buildUI.BuildTexts(Game.PlayerData);
     }
 
-    public void Update()
+    private void Update()
     {
         MouseAction();
     }
     public void SetTower(int tower)
     {
-        
+       var t = Instantiate(Game.PlayerData.towers[tower].prefab,towerPosition,Quaternion.identity).GetComponent<Tower>();
+       t.data = Game.PlayerData.towers[tower];
     }
 
-    public void MouseAction()
+    private void MouseAction()
     {
         var origin = cam.transform.position;
         var dir = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.farClipPlane));
@@ -38,6 +40,7 @@ public class ActionController : MonoBehaviour
                 if (hit.collider.CompareTag("TowerSpot"))
                 {
                     ShowBuildUI(hit.transform);
+                    towerPosition = hit.transform.position;
                 }else if (!hit.collider.CompareTag("UI"))
                 {
                     HideBuildUI();

@@ -15,7 +15,9 @@ MonoBehaviour:
   initialCost: 0
   upgradeMultiplier: 0
   attackPower: 0
-  attackSpeed: 0
+  attackDelay: 5
   attackRange: 0
-  projectile: {fileID: 0}
-  textName: 
+  projectile: {fileID: 583142155059956579, guid: 61d428fc4d45b49df96b00c6c646382b,
+    type: 3}
+  textName: 1
+  prefab: {fileID: 9120988095440367357, guid: 3be7b4ece6ac44e1ca5b034b8dde3b52, type: 3}

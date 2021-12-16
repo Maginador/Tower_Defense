@@ -6,8 +6,10 @@ namespace ScriptableObjects
     public class TowerData : ScriptableObject
     {
         public int initialCost, upgradeMultiplier;
-        public int attackPower, attackSpeed, attackRange;
+        public int attackPower, attackRange;
+        public float attackDelay;
         public GameObject projectile;
         public string textName;
+        public GameObject prefab;
     }
 }
