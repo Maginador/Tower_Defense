@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Controllers;
+using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,14 +11,21 @@ public class InGameUIController : MonoBehaviour
 
     [SerializeField]
     private Text goldUI, xpUI, lvlUI;
+    [SerializeField]
+    private Text waves, enemies;
+
+    [SerializeField] private GameObject winScreen, loseScreen;
 
     public void Start()
     {
         PlayerData.Instance.AddOnGoldChangedListener(UpdateGoldUI);
         PlayerData.Instance.AddOnXPChangedListener(UpdateXpUI);
+        LevelController.Instance.AddOnWaveChangedListener(UpdateWave);
+        LevelController.Instance.AddOnEnemiesQuantityChangedListener(UpdateEnemies);
         UpdateGoldUI();
         UpdateXpUI();
-
+        UpdateEnemies();
+        UpdateWave();
     }
 
     public void UpdateGoldUI()
@@ -28,5 +36,30 @@ public class InGameUIController : MonoBehaviour
     public void UpdateXpUI()
     {
         xpUI.text = PlayerData.Instance.CurrentXp().ToString();
-        lvlUI.text = PlayerData.Instance.CurrentLvl().ToString();    }
+        lvlUI.text = PlayerData.Instance.CurrentLvl().ToString();
+        
+    }
+    
+    public void UpdateWave()
+    {
+        waves.text = (LevelController.Instance.CurrentWave()+1) + "/" + (LevelController.Instance.GetMaxWaves());
+        
+    }
+    
+    public void UpdateEnemies()
+    {
+        enemies.text = LevelController.Instance.CurrentQuantityOfEnemies().ToString();
+        
+    }
+
+    public void ShowWinScreen()
+    {
+        winScreen.SetActive(true);
+        
+    }
+
+    public void ShowLoseScreen()
+    {
+        loseScreen.SetActive(true);
+    }
 }

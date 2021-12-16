@@ -1,5 +1,6 @@
 using Controllers;
 using Interfaces;
+using Managers;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -12,7 +13,8 @@ namespace Entities
         public int health;
         public int currentPoint;
         private Vector3 _currentTarget;
-        
+        public EnemiesManager manager;
+
         public void Start()
         {
             health = data.health;
@@ -74,9 +76,11 @@ namespace Entities
         public void Die()
         {
             //TODO Add animations and effects
-            Destroy(gameObject);
+            manager.RemoveEnemyFromList(this);
             PlayerData.Instance.GiveGold(data.goldReward);
             PlayerData.Instance.AddExperience(data.xpReward);
+            Destroy(gameObject);
+
         }
     }
 }
