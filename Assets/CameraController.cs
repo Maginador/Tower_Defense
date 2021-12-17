@@ -10,10 +10,26 @@ public class CameraController : MonoBehaviour
     private Vector3 recordedInitialPosition, recordedFinalPosition;
 
     private bool isClicking;
-    // Start is called before the first frame update
-    void Start()
+
+    private int currentZoomLevel = 0, minZoomLevel = -3, maxZoomLevel = 3;
+
+    public void ZoomIn()
     {
-        
+        if (currentZoomLevel < maxZoomLevel)
+        {
+            viewCamera.fieldOfView -= 10;
+            currentZoomLevel++;
+        }
+    }
+
+    public void ZoomOut()
+    {
+        if (currentZoomLevel > minZoomLevel)
+        {
+            viewCamera.fieldOfView += 10;
+            currentZoomLevel--;
+
+        }
     }
 
     // Update is called once per frame
