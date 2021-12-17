@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8172883373305295977}
   m_Layer: 2
   m_Name: Range
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 5263003849503604080}
   m_Layer: 0
   m_Name: Cannon
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 2567982702868254110}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 3038143967099814823}
   m_Layer: 0
   m_Name: Tower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -334,6 +334,14 @@ MonoBehaviour:
   data: {fileID: 0}
   rangeMeter: {fileID: 3413674954157361595}
   timer: 0
+  level: 1
+  colorUpgradeTable:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.51476586, g: 1, b: 0, a: 0}
+  - {r: 1, g: 0.8101982, b: 0, a: 0}
+  - {r: 1, g: 0.3930598, b: 0, a: 0}
+  - {r: 1, g: 0, b: 0, a: 0}
+  upgradeCost: 0
 --- !u!54 &3038143967099814823
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -364,7 +372,7 @@ GameObject:
   - component: {fileID: 9120988096365388114}
   m_Layer: 0
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

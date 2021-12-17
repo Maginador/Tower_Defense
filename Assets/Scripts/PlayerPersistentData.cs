@@ -22,7 +22,7 @@ public class PlayerPersistentData
       Experience = 0;
       Level = 0;
       SoftCurrency = 0;
-      HardCurrency = 0;
+      HardCurrency = 100;
    }
 
    public void SetExperience(int xp)

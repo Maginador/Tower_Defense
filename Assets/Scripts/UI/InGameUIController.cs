@@ -11,7 +11,7 @@ public class InGameUIController : MonoBehaviour
 {
 
     [SerializeField]
-    private Text goldUI, xpUI, lvlUI;
+    private Text goldUI, xpUI, lvlUI, diamondsUI;
     [SerializeField]
     private Text waves, enemies;
 
@@ -20,6 +20,7 @@ public class InGameUIController : MonoBehaviour
     public void Start()
     {
         PlayerData.Instance.AddOnGoldChangedListener(UpdateGoldUI);
+        PlayerData.Instance.AddOnHCChangedListener(UpdateDiamondUI);
         PlayerData.Instance.AddOnXPChangedListener(UpdateXpUI);
         LevelController.Instance.AddOnWaveChangedListener(UpdateWave);
         LevelController.Instance.AddOnEnemiesQuantityChangedListener(UpdateEnemies);
@@ -27,11 +28,17 @@ public class InGameUIController : MonoBehaviour
         UpdateXpUI();
         UpdateEnemies();
         UpdateWave();
+        UpdateDiamondUI();
     }
 
     public void UpdateGoldUI()
     {
         goldUI.text = PlayerData.Instance.CurrentGoldAmount().ToString();
+    }
+    
+    public void UpdateDiamondUI()
+    {
+        diamondsUI.text = PlayerData.Instance.CurrentHCAmount().ToString();
     }
     
     public void UpdateXpUI()

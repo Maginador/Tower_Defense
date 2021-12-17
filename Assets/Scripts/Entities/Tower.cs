@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -14,9 +16,22 @@ namespace Entities
         public GameObject rangeMeter;
         public float timer;
 
-        private List<GameObject> targetList;
+        private List<GameObject> _targetList;
+        private bool _towerUpgrading = false;
+        private Coroutine _coroutine;
+        public int level=1;
+        public Color[] colorUpgradeTable;
+        public int upgradeCost;
+        public float upgradeTimer;
+
         public void Update()
         {
+            if (_towerUpgrading)
+            {
+                LookUp();
+                return;
+                
+            }
             ValidateTarget();
             LookAt();
             if (timer <= Time.time)
@@ -28,25 +43,31 @@ namespace Entities
 
         public void Awake()
         {
-            targetList = new List<GameObject>();
+            _targetList = new List<GameObject>();
+        }
+
+        public void Start()
+        {
+            upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);
         }
 
         private void Shoot()
         {
-            if (targetList.Count > 0)
+            if (_targetList.Count > 0)
             {
-                Instantiate(data.projectile,bulletSpawnSpot.position,towerHead.rotation);
+               var bullet = Instantiate(data.projectile,bulletSpawnSpot.position,towerHead.rotation).GetComponent<Bullet>();
+               bullet.power = Mathf.FloorToInt(data.attackPower * level * data.upgradeStatsMultiplier);
             }
         }
 
         private void LookAt()
         {
-            if (targetList.Count > 0)
+            if (_targetList.Count > 0)
             {
-                if(towerHead && targetList.Count > 0)
+                if(towerHead && _targetList.Count > 0)
                     try
                     {
-                        towerHead.LookAt(targetList[0].transform);
+                        towerHead.LookAt(_targetList[0].transform);
                     }
                     catch (Exception e)
                     {
@@ -54,30 +75,58 @@ namespace Entities
                     }
             }
         }
+        
+        private void LookUp()
+        {
+            towerHead.LookAt(towerHead.position + Vector3.up);
+        }
 
+        
 
         private void ValidateTarget()
         {
-            if (targetList.Count > 0)
+            if (_targetList.Count > 0)
             {
-                if (targetList[0] == null)
+                if (_targetList[0] == null)
                 {
-                    targetList.RemoveAt(0);
+                    _targetList.RemoveAt(0);
                 }
             }
         }
-        public void Upgrade()
+        public void StartUpgrade()
         {
-        
+            _coroutine = StartCoroutine(UpgradeDelay());
+        }
+
+        private IEnumerator UpgradeDelay()
+        {
+            _towerUpgrading = true;
+            var time = level * 5;
+            upgradeTimer = Time.time + time;
+            yield return new WaitForSeconds(time); //TODO add parameter to change easier and make it permanently upgradeable
+            _towerUpgrading = false;
+
+            DoUpgrade();
+        }
+
+        private void DoUpgrade()
+        {
+            level++;
+            ChangeVisual();
+            upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);        }
+
+        private void ChangeVisual()
+        {
+            towerHead.GetComponent<Renderer>().material.color = colorUpgradeTable[level];
         }
 
         public void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Enemy"))
             {
-                if (!targetList.Contains(other.gameObject))
+                if (!_targetList.Contains(other.gameObject))
                 {
-                    targetList.Add(other.gameObject);
+                    _targetList.Add(other.gameObject);
                 }
             }
         }
@@ -85,10 +134,22 @@ namespace Entities
         public void OnTriggerExit(Collider other)
         {
 
-            if (targetList.Contains(other.gameObject))
+            if (_targetList.Contains(other.gameObject))
             {
-                targetList.Remove(other.gameObject);
+                _targetList.Remove(other.gameObject);
             }
+        }
+
+        public bool IsUpgrading()
+        {
+            return _towerUpgrading;
+        }
+
+        public void SpeedUp()
+        {
+            _towerUpgrading = false;
+            StopCoroutine(_coroutine);
+            DoUpgrade();
         }
     }
 }
