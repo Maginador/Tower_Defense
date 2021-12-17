@@ -14,6 +14,7 @@ namespace Controllers
         public GameObject[] floor;
         public Color[] colorTable;
         public GameObject startPoint;
+        public Camera viewCamera;
         public int startPointIndex;
         public GameObject waypoint;
         public List<Transform> waypoints;
@@ -47,7 +48,7 @@ namespace Controllers
             _width = data.levelMap.width;
             _height = data.levelMap.height;
             _levelMatrix = new int[_width, _height];
-
+            SetCameraInitialPosition();
             for (int i = 0; i < _width; i++)
             {
                 for (int o = 0; o < _height; o++)
@@ -66,6 +67,11 @@ namespace Controllers
             BuildPath();
         }
 
+        public void SetCameraInitialPosition()
+        {
+            viewCamera.transform.position = new Vector3(_width/2,
+                viewCamera.transform.position.y, _height / 2 - 10);
+        }
         public int SelectTile(Color color)
         {
             for (int i = 0; i < colorTable.Length; i++)
