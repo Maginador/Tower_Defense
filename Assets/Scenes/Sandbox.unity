@@ -1876,6 +1876,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 1, a: 1}
   startPoint: {fileID: 0}
+  viewCamera: {fileID: 546897955}
   startPointIndex: 0
   waypoint: {fileID: 560568819135299576, guid: e08b55a5bda374a558b2d6b01989c397, type: 3}
   waypoints: []
