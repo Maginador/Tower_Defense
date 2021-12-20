@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using ScriptableObjects;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -16,7 +17,8 @@ public class UpgradesGUI : MonoBehaviour
     [SerializeField] private UpgradeData[] dataList;
     private GameObject[] _tiers;
     private int maxTier=5;
-    public void BuildTree()
+
+    private void BuildTree()
     {
         _tiers = new GameObject[maxTier];
         
@@ -28,8 +30,8 @@ public class UpgradesGUI : MonoBehaviour
         for (int i = 0; i < dataList.Length; i++)
         {
             var b = Instantiate(buttonPrefab, _tiers[dataList[i].tier-1].transform, true);
-            b.name = dataList[i].name;
-            b.GetComponentInChildren<Text>().text = dataList[i].name;
+            b.name = dataList[i].upgradeName;
+            b.GetComponentInChildren<Text>().text = dataList[i].upgradeName;
         }
     }
     // Start is called before the first frame update
@@ -37,6 +39,7 @@ public class UpgradesGUI : MonoBehaviour
     {
         BuildTree();
     }
+
 
     // Update is called once per frame
     void Update()
