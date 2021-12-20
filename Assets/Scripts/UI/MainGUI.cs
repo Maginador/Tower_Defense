@@ -5,7 +5,8 @@ namespace UI
     public class MainGUI : BaseUI
     {
         [SerializeField] private GameObject levelSelector, upgrade, store, exit;
-        public enum GUIScreen { Main, Levels, Upgrade, Store, Exit};
+
+        private enum GUIScreen { Main, Levels, Upgrade, Store, Exit};
 
         private GUIScreen _currentScreen;   
         public void Start()

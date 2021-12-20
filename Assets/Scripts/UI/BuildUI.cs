@@ -1,22 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildUI : MonoBehaviour
+namespace UI
 {
-
-    [SerializeField] private Text[] towers;
-    [SerializeField] private Text[] costs;
-
-    public void BuildTexts(PlayerPersistentData persistentData)
+    public class BuildUI : MonoBehaviour
     {
-        for(int i =0; i<towers.Length; i++)
+
+        [SerializeField] private Text[] towers;
+        [SerializeField] private Text[] costs;
+
+        public void BuildTexts(PlayerPersistentData persistentData)
         {
-            towers[i].text = persistentData.towers[i].textName;
-            costs[i].text = persistentData.towers[i].initialCost.ToString();
+            for(int i =0; i<towers.Length; i++)
+            {
+                towers[i].text = persistentData.GetTower(i).textName;
+                costs[i].text = persistentData.GetTower(i).initialCost.ToString();
             
-        }
+            }
         
+        }
     }
 }

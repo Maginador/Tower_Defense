@@ -15,7 +15,7 @@ namespace Managers
         private List<float> _eventTimer;
         private List<string> _eventId;
         private Dictionary<string, int> _eventsDictionary;
-        private int currentIndex;
+        private int _currentIndex;
         
         public void Awake()
         {
@@ -46,12 +46,12 @@ namespace Managers
         public void CreateNewTimeEvent(string id, float time, UnityAction listener)
         {
             _timeEventListener.Add(new UnityEvent());
-            _timeEventListener[currentIndex].AddListener(listener);
+            _timeEventListener[_currentIndex].AddListener(listener);
             _eventTimeLimit.Add(time);
             _eventTimer.Add(0);
             _eventId.Add(id);
-            _eventsDictionary.Add(id,currentIndex);
-            currentIndex++;
+            _eventsDictionary.Add(id,_currentIndex);
+            _currentIndex++;
         }
 
         public void AddListenerToEvent(string id, UnityAction listener)

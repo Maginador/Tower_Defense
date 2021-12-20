@@ -292,7 +292,6 @@ GameObject:
   - component: {fileID: 7183461174451841861}
   - component: {fileID: 3076144952479434760}
   - component: {fileID: 6305463156382624576}
-  - component: {fileID: 1444432422759019087}
   m_Layer: 0
   m_Name: Base (1)
   m_TagString: Untagged
@@ -381,23 +380,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1444432422759019087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6474650762362214239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cb866ab443d94fbfa937454d1a57e5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerHead: {fileID: 0}
-  bulletSpawnSpot: {fileID: 0}
-  data: {fileID: 11400000, guid: d08f8ad5daccb4276b9dcba6e46b3555, type: 2}
-  rangeMeter: {fileID: 0}
-  timer: 0
 --- !u!1 &7193855768356710720
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,9 +442,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerHead: {fileID: 523596730490995143}
   bulletSpawnSpot: {fileID: 523596730490995143}
-  data: {fileID: 11400000, guid: d08f8ad5daccb4276b9dcba6e46b3555, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: d08f8ad5daccb4276b9dcba6e46b3555,
+    type: 2}
   rangeMeter: {fileID: 5305665244705882958}
   timer: 0
+  level: 1
+  colorUpgradeTable: []
+  <UpgradeCost>k__BackingField: 0
+  <UpgradeTimer>k__BackingField: 0
 --- !u!54 &5475086472158215407
 Rigidbody:
   m_ObjectHideFlags: 0

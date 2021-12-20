@@ -12,13 +12,13 @@ namespace Managers
     public class EnemiesManager:MonoBehaviour
     {
 
-        public EnemyData[] enemiesData;
-        public List<Enemy> enemies;
+        [SerializeField] private EnemyData[] enemiesData;
+        [SerializeField] private List<Enemy> enemies;
         private Vector3 _spawnSpot;
 
 
-        public int currentWave;
-        public int enemiesSpawned;
+        [SerializeField] private int currentWave;
+        [SerializeField] private int enemiesSpawned;
         
         public void SpawnEnemy(int selectedEnemy)
         {
@@ -29,8 +29,8 @@ namespace Managers
             LevelController.Instance.SetSpawnedEnemies(enemies.Count);
 
         }
-        
-        public void SpawnEnemy(EnemyData selectedEnemy)
+
+        private void SpawnEnemy(EnemyData selectedEnemy)
         {
             var enemy = Instantiate(selectedEnemy.enemyPrefab,_spawnSpot,Quaternion.identity).GetComponent<Enemy>();
             enemy.data = selectedEnemy;
@@ -47,7 +47,7 @@ namespace Managers
         public void Start()
         {
             enemies = new List<Enemy>();
-            _spawnSpot = LevelController.Instance.startPoint.transform.position + Vector3.up;
+            _spawnSpot = LevelController.Instance.StartPoint.transform.position + Vector3.up;
             StartCoroutine(WaveRunner());
             LevelController.Instance.SetWave(currentWave);
             LevelController.Instance.SetSpawnedEnemies(enemies.Count);
@@ -59,16 +59,16 @@ namespace Managers
             yield return new WaitForSeconds(3);
             while (true)
             {
-                if (enemiesSpawned < LevelController.Instance.data.enemiesPerWave[currentWave])
+                if (enemiesSpawned < LevelController.Instance.Data.enemiesPerWave[currentWave])
                 {
                     enemiesSpawned++;
-                    var randomEnemy = Random.Range(0, LevelController.Instance.data.enemiesInLevel.Length);
-                    SpawnEnemy(LevelController.Instance.data.enemiesInLevel[randomEnemy]);
+                    var randomEnemy = Random.Range(0, LevelController.Instance.Data.enemiesInLevel.Length);
+                    SpawnEnemy(LevelController.Instance.Data.enemiesInLevel[randomEnemy]);
                     yield return new WaitForSeconds(1); //TODO set timer variable that can be changed with upgrade
                 }
                 else
                 {
-                    if (currentWave +1 >= LevelController.Instance.data.waves)
+                    if (currentWave +1 >= LevelController.Instance.Data.waves)
                     {
                         break;
 
@@ -84,7 +84,7 @@ namespace Managers
 
         public void Update()
         {
-            if (currentWave +1 >= LevelController.Instance.data.waves && enemies.Count == 0 && enemiesSpawned >= LevelController.Instance.data.enemiesPerWave[currentWave] )
+            if (currentWave +1 >= LevelController.Instance.Data.waves && enemies.Count == 0 && enemiesSpawned >= LevelController.Instance.Data.enemiesPerWave[currentWave] )
             {
                 LevelController.Instance.ShowWinScreen();
 

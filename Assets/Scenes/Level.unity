@@ -1814,7 +1814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 546897955}
   buildUI: {fileID: 743404865}
-  upgradeUI: {fileID: 247926518}
+  upgradeInGameUI: {fileID: 247926518}
   speedUpUI: {fileID: 1783390284}
   mask:
     serializedVersion: 2
@@ -1862,7 +1862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9d681fc8a59482289c639666b9d05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 49ae57a7544d24aea85e821ad1c193ad, type: 2}
+  <Data>k__BackingField: {fileID: 0}
   floor:
   - {fileID: 1386459234053819694, guid: ce7a5e39c17054eb7b4055a4da7d601f, type: 3}
   - {fileID: 763492792998179032, guid: 2a12b2225047948748a07e885c3c4732, type: 3}
@@ -1875,7 +1875,7 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 1, a: 1}
-  startPoint: {fileID: 0}
+  <StartPoint>k__BackingField: {fileID: 0}
   viewCamera: {fileID: 546897955}
   startPointIndex: 0
   waypoint: {fileID: 560568819135299576, guid: e08b55a5bda374a558b2d6b01989c397, type: 3}

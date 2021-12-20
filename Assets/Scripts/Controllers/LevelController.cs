@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entities;
+using Managers;
 using ScriptableObjects;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.WSA;
@@ -10,15 +12,15 @@ namespace Controllers
 {
     public class LevelController : MonoBehaviour
     {
-        public LevelData data;
-        public GameObject[] floor;
-        public Color[] colorTable;
-        public GameObject startPoint;
-        public Camera viewCamera;
-        public int startPointIndex;
-        public GameObject waypoint;
-        public List<Transform> waypoints;
-        public static LevelController Instance;
+        [field: SerializeField] public LevelData Data { get; private set; }
+        [SerializeField] private GameObject[] floor;
+        [SerializeField] private Color[] colorTable;
+        [field: SerializeField] public GameObject StartPoint { get; private set; }
+        [SerializeField] private Camera viewCamera;
+        [SerializeField] private int startPointIndex;
+        [SerializeField] private GameObject waypoint;
+        [SerializeField] private List<Transform> waypoints;
+         public static LevelController Instance;
         private UnityEvent _onWaveChanged;
         private UnityEvent _onEnemiesQuantityChanged;
 
@@ -37,7 +39,7 @@ namespace Controllers
                 Destroy(Instance);
             }
             Instance = this;
-            data = Game.GetCurrentLevel();
+            Data = Game.GetCurrentLevel();
             _onWaveChanged = new UnityEvent();
             _onEnemiesQuantityChanged = new UnityEvent();
             PrepareLevel();
@@ -46,15 +48,15 @@ namespace Controllers
         public void PrepareLevel()
         {
             
-            _width = data.levelMap.width;
-            _height = data.levelMap.height;
+            _width = Data.levelMap.width;
+            _height = Data.levelMap.height;
             _levelMatrix = new int[_width, _height];
             SetCameraInitialPosition();
             for (int i = 0; i < _width; i++)
             {
                 for (int o = 0; o < _height; o++)
                 {
-                    var tile = SelectTile(data.levelMap.GetPixel(i, o));
+                    var tile = SelectTile(Data.levelMap.GetPixel(i, o));
                     _levelMatrix[i, o] = tile;
                     if (tile == Tiles.SpawnSpot)
                     {
@@ -91,7 +93,7 @@ namespace Controllers
             obj.name = x + " , " + y;
             if (tile == Tiles.SpawnSpot)
             {
-                startPoint = obj;
+                StartPoint = obj;
             }else if (tile == Tiles.EndSpot)
             {
                 PlayerData.Instance.baseEntity = obj.GetComponent<Base>();
@@ -197,7 +199,17 @@ namespace Controllers
 
         public int GetMaxWaves()
         {
-            return data.waves;
+            return Data.waves;
+        }
+
+        public Transform GetWaypoint(int currentWaypoint)
+        {
+            return waypoints[currentWaypoint];
+        }
+
+        public int GetWaupointsCount()
+        {
+            return waypoints.Count;
         }
     }
 
