@@ -78,5 +78,10 @@ namespace UI
             _currentScreen = GUIScreen.Levels;
 
         }
+
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }
