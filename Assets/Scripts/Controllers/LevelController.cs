@@ -37,6 +37,7 @@ namespace Controllers
                 Destroy(Instance);
             }
             Instance = this;
+            data = Game.GetCurrentLevel();
             _onWaveChanged = new UnityEvent();
             _onEnemiesQuantityChanged = new UnityEvent();
             PrepareLevel();
@@ -103,10 +104,10 @@ namespace Controllers
             //TODO create a helper call to fix broken level textures (textures that do not have complete paths for example) 
             var y = Mathf.FloorToInt(startPointIndex / (float)_height);
             var x = startPointIndex % _height;
-            var a = _levelMatrix[x, y+1];
-            var b = _levelMatrix[x, y-1];
-            var c = _levelMatrix[x+1, y];
-            var d = _levelMatrix[x-1, y];
+            var a = 0; if(y+1 <_height) a =_levelMatrix[x, y+1];
+            var b = 0; if(y-1> 0) b =_levelMatrix[x, y-1];;
+            var c = 0;  if(x+1 <_width) c =_levelMatrix[x+1, y];
+            var d = 0; if(x-1> 0) d =_levelMatrix[x-1, y]; 
 
             var next = a == Tiles.Path ? x+(y+1)*_height : b == Tiles.Path ? x  +(y-1)*_height : c == Tiles.Path ? x  +1+(y*_height) : d == Tiles.Path ? x -1 +(y*_height) : -1;
             CheckNeighbours(next);
@@ -124,10 +125,10 @@ namespace Controllers
             _levelMatrix[x, y] = -1;
             SpawnWaypoint(x,y);
 
-            var a = _levelMatrix[x, y+1];
-            var b = _levelMatrix[x, y-1];
-            var c = _levelMatrix[x+1, y];
-            var d = _levelMatrix[x-1, y];
+            var a = 0; if(y+1 <_height) a =_levelMatrix[x, y+1];
+            var b = 0; if(y-1> 0) b =_levelMatrix[x, y-1];;
+            var c = 0;  if(x+1 <_width) c =_levelMatrix[x+1, y];
+            var d = 0; if(x-1> 0) d =_levelMatrix[x-1, y]; 
             if (a == Tiles.Path)
             {
                 CheckNeighbours(x  +(y+1)*_height);

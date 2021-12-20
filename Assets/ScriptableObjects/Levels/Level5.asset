@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31f3664970f8476ba15e97277934f77, type: 3}
   m_Name: Level5
   m_EditorClassIdentifier: 
-  levelMap: {fileID: 2800000, guid: 6590eee6a1b7d4220a66a25b0309fd93, type: 3}
-  waves: 4
-  enemiesPerWave: 050000000a0000000f0000001e000000
+  levelMap: {fileID: 2800000, guid: d4ffca0ba82d2457db51004cb9ad0a23, type: 3}
+  waves: 15
+  enemiesPerWave: 050000000a0000000f0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e000000
   enemiesInLevel:
   - {fileID: 11400000, guid: 4f22e44ddae7f4ccaa4501a63dc79d8c, type: 2}
   midBosses: 0

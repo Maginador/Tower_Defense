@@ -1,12 +1,14 @@
 using System;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
     //mocked persistentData 
     [SerializeField] private TowerData[] towers;
     [SerializeField] private int initialGold;
+    private static LevelData _level;
     public void Awake()
     {
         if (PlayerPersistentData == null)
@@ -23,8 +25,13 @@ public class Game : MonoBehaviour
 
     public static PlayerPersistentData PlayerPersistentData { get; set; }
 
+    public static LevelData GetCurrentLevel()
+    {
+        return _level;
+    }
     public static void RunLevel(LevelData currentData)
     {
-        throw new NotImplementedException();
+        _level = currentData;
+        SceneManager.LoadScene("Level");
     }
 }
