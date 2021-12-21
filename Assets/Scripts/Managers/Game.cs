@@ -49,7 +49,10 @@ namespace Managers
             //TODO Validate on Backend 
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
-                {"time",levelStatsData.elapsedTime }, {"gold", levelStatsData.totalGold}, {"enemies", levelStatsData.enemiesKilled}
+                {"time",levelStatsData.ElapsedTime }, 
+                {"gold", levelStatsData.TotalGold}, 
+                {"enemies", levelStatsData.EnemiesKilled}, 
+                {"level", levelStatsData.LevelId+1}
             };
             PlayfabManager.CallFunction("ValidateLevel",parameters);
             //TODO calculate stars 
@@ -59,35 +62,40 @@ namespace Managers
             if (health == PlayerPersistentData.BaseHealth)
             {
                 stars++;
+                Debug.Log("Star 1");
             }
             if (entity.IsUntouched())
             {
                 stars++;
+                Debug.Log("Star 2");
+
             }
             if (health > PlayerPersistentData.BaseHealth / 2)
             {
                 stars++;
+                Debug.Log("Star 3");
+
             }
-            PlayerPrefs.SetInt("LevelStars_" + levelStatsData.levelId,stars);
+            PlayerPrefs.SetInt("LevelStars_" + levelStatsData.LevelId,stars);
             var rewards = Game.CalculateReward(levelStatsData);
             var xp = Game.CalculateXp(levelStatsData);
 
             Game.PlayerPersistentData.GainXp(xp);
             Game.PlayerPersistentData.GainRewards(rewards);
             //TODO save information about level conclusion
-            PlayerPrefs.SetInt("LevelCompleted" + levelStatsData.levelId,1);
+            PlayerPrefs.SetInt("LevelCompleted" + levelStatsData.LevelId,1);
 
         }
 
         private static int CalculateXp(LevelStatsData levelStatsData)
         {
-            return levelStatsData.levelId * levelStatsData.enemiesKilled; //TODO improve logic for calculation
+            return levelStatsData.LevelId * levelStatsData.EnemiesKilled; //TODO improve logic for calculation
         }
 
         private static int[] CalculateReward(LevelStatsData levelStatsData)
         {
             int[] rewards = new int[2];
-            rewards[0] = (levelStatsData.enemiesKilled*levelStatsData.levelId)*10; //Soft Currency Reward TODO increase reward for first time 
+            rewards[0] = (levelStatsData.EnemiesKilled*levelStatsData.LevelId)*10; //Soft Currency Reward TODO increase reward for first time 
             rewards[1] = 1; //Hard Currency Reward TODO Request from backend
 
             return rewards;

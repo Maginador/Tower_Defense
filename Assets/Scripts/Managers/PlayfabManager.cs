@@ -14,6 +14,7 @@ namespace Managers
         [SerializeField]  private Text debug;
         public static PlayfabManager Instance;
         public ExecuteFunctionResult _result;
+        public PlayFabError _error;
         public void Awake()
         {
             if (!Instance)
@@ -62,6 +63,7 @@ namespace Managers
 
         public static void CallFunction(string function, Dictionary<string, object> parameters)
         {
+            Debug.Log(function);
             PlayFabCloudScriptAPI.ExecuteFunction(new ExecuteFunctionRequest()
             {
                 Entity = new PlayFab.CloudScriptModels.EntityKey()
@@ -85,6 +87,7 @@ namespace Managers
             }, (PlayFabError error) =>
             {
                 Debug.Log($"Opps Something went wrong: {error.GenerateErrorReport()}");
+                Instance._error = error;
             });        }
     }
 }

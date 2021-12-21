@@ -48,7 +48,7 @@ namespace UI
     
         public void UpdateWave()
         {
-            waves.text = (LevelController.Instance.CurrentWave()+1) + "/" + (LevelController.Instance.GetMaxWaves());
+            waves.text = (LevelController.Instance.CurrentWave()) + "/" + (LevelController.Instance.GetMaxWaves());
         
         }
     

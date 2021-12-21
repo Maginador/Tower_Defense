@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelMap: {fileID: 2800000, guid: b903314360d8d4cdca120eac4adc6ca6, type: 3}
   waves: 4
-  enemiesPerWave: 050000000a0000000f0000001e000000
   enemiesInLevel:
   - {fileID: 11400000, guid: 4f22e44ddae7f4ccaa4501a63dc79d8c, type: 2}
   midBosses: 0
@@ -22,3 +21,4 @@ MonoBehaviour:
   description: This is the first battle to hold your ground! Don't think about losing
     it!
   levelName: The beginning
+  id: 0

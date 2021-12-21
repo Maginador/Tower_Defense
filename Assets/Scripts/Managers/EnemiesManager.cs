@@ -36,6 +36,7 @@ namespace Managers
             enemy.data = selectedEnemy;
             enemy.manager = this;
             enemies.Add(enemy);
+            LevelController.Instance.stats.EnemiesKilled++;
             LevelController.Instance.SetSpawnedEnemies(enemies.Count);
 
         }
@@ -59,7 +60,7 @@ namespace Managers
             yield return new WaitForSeconds(3);
             while (true)
             {
-                if (enemiesSpawned < LevelController.Instance.Data.enemiesPerWave[currentWave])
+                if (enemiesSpawned < currentWave * 5)
                 {
                     enemiesSpawned++;
                     var randomEnemy = Random.Range(0, LevelController.Instance.Data.enemiesInLevel.Length);
@@ -68,25 +69,25 @@ namespace Managers
                 }
                 else
                 {
-                    if (currentWave +1 >= LevelController.Instance.Data.waves)
+                    if (currentWave +1 > LevelController.Instance.Data.waves)
                     {
                         break;
 
-                    }else{
-                        currentWave++;
-                        LevelController.Instance.SetWave(currentWave);
-                        enemiesSpawned = 0;
-                        yield return new WaitForSeconds(10);//TODO set timer variable that can be changed with upgrade
                     }
+                    currentWave++;
+                    LevelController.Instance.SetWave(currentWave);
+                    enemiesSpawned = 0;
+                    yield return new WaitForSeconds(10);//TODO set timer variable that can be changed with upgrade
                 }
             }
         }
 
         public void Update()
         {
-            if (currentWave +1 >= LevelController.Instance.Data.waves && enemies.Count == 0 && enemiesSpawned >= LevelController.Instance.Data.enemiesPerWave[currentWave] )
+            if (currentWave +1 > LevelController.Instance.Data.waves && enemies.Count == 0 && enemiesSpawned >= currentWave * 5 )
             {
                 LevelController.Instance.ShowWinScreen();
+                Destroy(this);
 
             }
         }

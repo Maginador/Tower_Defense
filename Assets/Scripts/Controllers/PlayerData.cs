@@ -15,6 +15,7 @@ namespace Controllers
         private UnityEvent _onXpChanged;
         private UnityEvent _onHcChanged;
         public Base baseEntity;
+        private int _receivedGold;
 
         public void Awake()
         {
@@ -59,11 +60,13 @@ namespace Controllers
         {
             _data = pData;
             _currentGold = _data.InitialGold;
+            _receivedGold = 0;
         }
 
         public void GiveGold(int gold)
         {
             _currentGold += gold;
+            _receivedGold += gold;
             _onGoldChanged.Invoke();
         }
 
@@ -83,7 +86,11 @@ namespace Controllers
         {
             return _currentGold;
         }
-
+        
+        public int GoldReceivedThisLevel()
+        {
+            return _receivedGold;
+        }
         public void AddExperience(int xp)
         {
             _data.SetExperience(xp);

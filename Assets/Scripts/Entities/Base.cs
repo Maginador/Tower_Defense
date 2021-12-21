@@ -7,13 +7,14 @@ namespace Entities
 {
     public class Base : Tower, IDamageable
     {
-        private int _health, _timeToRecover, _constHealthRecover, _constGoldProduction, _timeToProduceGold;
+        private int _health, _maxHealth, _timeToRecover, _constHealthRecover, _constGoldProduction, _timeToProduceGold;
         private float _healthTimer,_goldTimer;
         private bool _untouched;
 
         private new void Start()
         {
             _health = Game.PlayerPersistentData.BaseHealth;
+            _maxHealth = Game.PlayerPersistentData.BaseHealth;
             _timeToRecover = Game.PlayerPersistentData.TimeToRecover;
             _constHealthRecover = Game.PlayerPersistentData.ConstantHealthRecovered;
             _constGoldProduction = Game.PlayerPersistentData.ConstantGoldProduction;
@@ -32,7 +33,8 @@ namespace Entities
 
         public void RecoverHealth(int recover)
         {
-            _health += recover;
+            if(_health < _maxHealth)
+                _health += recover;
         }
 
         public int GetHealth()

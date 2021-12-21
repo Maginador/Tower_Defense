@@ -23,13 +23,13 @@ namespace Controllers
          public static LevelController Instance;
         private UnityEvent _onWaveChanged;
         private UnityEvent _onEnemiesQuantityChanged;
-        private LevelStatsData stats; 
+        public LevelStatsData stats; 
         [SerializeField] private InGameUIController uiController;
         //Path Builder Variables
         private int[,] _levelMatrix;
         private int _width, _height;
 
-
+        private float _timeBeforeLevel, _timeAfterLevel;
         private int _wave;
         private int _enemies;
         public void Awake()
@@ -42,6 +42,7 @@ namespace Controllers
             Data = Game.GetCurrentLevel();
             _onWaveChanged = new UnityEvent();
             _onEnemiesQuantityChanged = new UnityEvent();
+            _timeBeforeLevel = Time.unscaledTime;
             PrepareLevel();
         }
 
@@ -53,7 +54,7 @@ namespace Controllers
             _levelMatrix = new int[_width, _height];
             SetCameraInitialPosition();
             stats = new LevelStatsData();
-            stats.levelId = Data.id;
+            stats.LevelId = Data.id;
             for (int i = 0; i < _width; i++)
             {
                 for (int o = 0; o < _height; o++)
@@ -179,7 +180,12 @@ namespace Controllers
 
         public void ShowWinScreen()
         {
+            _timeAfterLevel = Time.unscaledTime;
+
+            stats.TotalGold =PlayerData.Instance.GoldReceivedThisLevel();
+            stats.ElapsedTime = _timeAfterLevel - _timeBeforeLevel;
             uiController.ShowWinScreen();
+            Debug.Log(stats.ToString());
             Game.OnLevelWin(stats);
         }
         
@@ -227,9 +233,16 @@ namespace Controllers
 
     public class LevelStatsData
     {
-        public int levelId;
-        public int totalGold;
-        public float elapsedTime;
-        public int enemiesKilled;
+        public override string ToString()
+        {
+            return "LevelId:" + LevelId + "; " 
+                   + "TotalGold:" + TotalGold + "; " 
+                   + "ElapsedTime:" + ElapsedTime + "; " 
+                   + "EnemiesKilled:" + EnemiesKilled;
+        }
+        public int LevelId;
+        public int TotalGold;
+        public float ElapsedTime;
+        public int EnemiesKilled;
     }
 }
