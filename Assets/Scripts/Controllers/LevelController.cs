@@ -23,7 +23,7 @@ namespace Controllers
          public static LevelController Instance;
         private UnityEvent _onWaveChanged;
         private UnityEvent _onEnemiesQuantityChanged;
-
+        private LevelStatsData stats; 
         [SerializeField] private InGameUIController uiController;
         //Path Builder Variables
         private int[,] _levelMatrix;
@@ -52,6 +52,8 @@ namespace Controllers
             _height = Data.levelMap.height;
             _levelMatrix = new int[_width, _height];
             SetCameraInitialPosition();
+            stats = new LevelStatsData();
+            stats.levelId = Data.id;
             for (int i = 0; i < _width; i++)
             {
                 for (int o = 0; o < _height; o++)
@@ -178,6 +180,7 @@ namespace Controllers
         public void ShowWinScreen()
         {
             uiController.ShowWinScreen();
+            Game.OnLevelWin(stats);
         }
         
         public void ShowLoseScreen()
@@ -219,5 +222,14 @@ namespace Controllers
         public const int TowerSpot = 2;
         public const int Path = 3;
         public const int EndSpot = 4;
+    }
+
+
+    public class LevelStatsData
+    {
+        public int levelId;
+        public int totalGold;
+        public float elapsedTime;
+        public int enemiesKilled;
     }
 }

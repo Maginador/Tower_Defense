@@ -9,6 +9,8 @@ namespace Entities
     {
         private int _health, _timeToRecover, _constHealthRecover, _constGoldProduction, _timeToProduceGold;
         private float _healthTimer,_goldTimer;
+        private bool _untouched;
+
         private new void Start()
         {
             _health = Game.PlayerPersistentData.BaseHealth;
@@ -16,9 +18,11 @@ namespace Entities
             _constHealthRecover = Game.PlayerPersistentData.ConstantHealthRecovered;
             _constGoldProduction = Game.PlayerPersistentData.ConstantGoldProduction;
             _timeToProduceGold = Game.PlayerPersistentData.TimeToProduceGold;
+            _untouched = true;
         }
         public void TakeDamage(int damage)
         {
+            _untouched = false;
             _health -= damage;
             if (_health <= 0)
             {
@@ -31,6 +35,10 @@ namespace Entities
             _health += recover;
         }
 
+        public int GetHealth()
+        {
+            return _health;
+        }
         public void Die()
         {
             //TODO Game Over Screen, animations and effects
@@ -56,6 +64,11 @@ namespace Entities
                 ProduceGold();
                 _goldTimer = Time.time + _timeToProduceGold;
             }
+        }
+
+        public bool IsUntouched()
+        {
+            return _untouched;
         }
     }
 

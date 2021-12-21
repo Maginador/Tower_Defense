@@ -47,11 +47,7 @@ namespace Managers
             Instance.debug.text = "Session Ticket : " + loginResult.SessionTicket;
             Instance.debug.text += "\nSession EntityToken : " + loginResult.EntityToken.EntityToken;
             Instance.debug.text += "\nSession Id : " + loginResult.PlayFabId;
-            Dictionary<string, object> parameters = new Dictionary<string, object>
-            {
-                {"time", 150}, {"gold", 1000}, {"enemies", 10}
-            };
-            CallFunction("ValidateLevel",parameters);
+           
         }
         private static void OnGoogleLogin(LoginResult loginResult)
         {

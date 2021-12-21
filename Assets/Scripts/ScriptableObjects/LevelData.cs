@@ -13,5 +13,6 @@ namespace ScriptableObjects
         public int boss;
         public string description;
         public string levelName;
+        public int id;
     }
 }

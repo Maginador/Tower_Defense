@@ -63,4 +63,15 @@ public class PlayerPersistentData
 
       return PlayerId;
    }
+
+   public void GainXp(int xp)
+   {
+      Experience += xp;
+   }
+
+   public void GainRewards(int[] rewards)
+   {
+      SoftCurrency += rewards[0];
+      HardCurrency += rewards[1];
+   }
 }
