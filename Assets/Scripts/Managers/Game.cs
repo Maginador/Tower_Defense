@@ -10,13 +10,18 @@ namespace Managers
         [SerializeField] private TowerData[] towers;
         [SerializeField] private int initialGold;
         private static LevelData _level;
-        public void Awake()
+        private void Awake()
         {
             if (PlayerPersistentData == null)
             {
                 PlayerPersistentData = GetPlayerData();
             }
             DontDestroyOnLoad(this.gameObject);
+        }
+
+        private void Start()
+        {
+            PlayfabManager.Instance.PlayerLogin();
         }
 
         private PlayerPersistentData GetPlayerData()

@@ -48,8 +48,19 @@ public class PlayerPersistentData
    public int Experience { get; private set; }
    public int Level { get; set; }
 
+   public string PlayerId { get; set; }
    public TowerData GetTower(int tower)
    {
       return _towers[tower];
+   }
+
+   public string GetID()
+   {
+      if (string.IsNullOrEmpty(PlayerId))
+      {
+         PlayerId = SystemInfo.deviceUniqueIdentifier.ToString();
+      }
+
+      return PlayerId;
    }
 }
