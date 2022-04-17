@@ -10,19 +10,20 @@ namespace Entities
     public class Tower : MonoBehaviour
     {
 
-        public Transform towerHead;
-        public Transform bulletSpawnSpot;
-        public TowerData data;
-        public GameObject rangeMeter;
-        public float timer;
+        [SerializeField] private Transform towerHead;
+        [SerializeField] private Transform bulletSpawnSpot;
+        [field: SerializeField] public TowerData Data { get; set; }
+        [SerializeField] private GameObject rangeMeter;
+        [SerializeField] private float timer;
+        [SerializeField] private int level=1;
+        [SerializeField] private Color[] colorUpgradeTable;
+        [field: SerializeField] public int UpgradeCost { get; private set; }
+        [field: SerializeField] public float UpgradeTimer { get; private set; }
 
         private List<GameObject> _targetList;
         private bool _towerUpgrading = false;
         private Coroutine _coroutine;
-        public int level=1;
-        public Color[] colorUpgradeTable;
-        public int upgradeCost;
-        public float upgradeTimer;
+       
 
         public void Update()
         {
@@ -37,7 +38,7 @@ namespace Entities
             if (timer <= Time.time)
             {
                 Shoot();
-                timer = Time.time + data.attackDelay;
+                timer = Time.time + Data.attackDelay;
             }
         }
 
@@ -48,15 +49,15 @@ namespace Entities
 
         public void Start()
         {
-            upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);
+            UpgradeCost = Mathf.FloorToInt(Data.upgradeCostMultiplier * level * Data.initialCost);
         }
 
         private void Shoot()
         {
             if (_targetList.Count > 0)
             {
-               var bullet = Instantiate(data.projectile,bulletSpawnSpot.position,towerHead.rotation).GetComponent<Bullet>();
-               bullet.power = Mathf.FloorToInt(data.attackPower * level * data.upgradeStatsMultiplier);
+               var bullet = Instantiate(Data.projectile,bulletSpawnSpot.position,towerHead.rotation).GetComponent<Bullet>();
+               bullet.power = Mathf.FloorToInt(Data.attackPower * level * Data.upgradeStatsMultiplier);
             }
         }
 
@@ -102,7 +103,7 @@ namespace Entities
         {
             _towerUpgrading = true;
             var time = level * 5;
-            upgradeTimer = Time.time + time;
+            UpgradeTimer = Time.time + time;
             yield return new WaitForSeconds(time); //TODO add parameter to change easier and make it permanently upgradeable
             _towerUpgrading = false;
 
@@ -113,7 +114,7 @@ namespace Entities
         {
             level++;
             ChangeVisual();
-            upgradeCost = Mathf.FloorToInt(data.upgradeCostMultiplier * level * data.initialCost);        }
+            UpgradeCost = Mathf.FloorToInt(Data.upgradeCostMultiplier * level * Data.initialCost);        }
 
         private void ChangeVisual()
         {

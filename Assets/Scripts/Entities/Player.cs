@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Managers;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace Entities
 {
-   private PlayerPersistentData _persistentData;
-
-
-   public void GetPlayerData()
+   public class Player : MonoBehaviour
    {
-      _persistentData = Game.PlayerPersistentData;
-   }
+      private PlayerPersistentData _persistentData;
 
+
+      public void GetPlayerData()
+      {
+         _persistentData = Game.PlayerPersistentData;
+      }
+
+   }
 }
 

@@ -1,5 +1,6 @@
 using System;
 using Entities;
+using Managers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -57,7 +58,7 @@ namespace Controllers
         public void SetData(PlayerPersistentData pData)
         {
             _data = pData;
-            _currentGold = _data._initialGold;
+            _currentGold = _data.InitialGold;
         }
 
         public void GiveGold(int gold)
@@ -99,19 +100,19 @@ namespace Controllers
             return _data.Level;
         }
 
-        public bool HasEnoughHC(int hc)
+        public bool HasEnoughHc(int hc)
         {
             return _data.HardCurrency >= hc;;
         }
 
-        public void SpendHC(int cost)
+        public void SpendHc(int cost)
         {
             _data.HardCurrency -= cost;
             _onHcChanged.Invoke();
 
         }
 
-        public int CurrentHCAmount()
+        public int CurrentHcAmount()
         {
             return _data.HardCurrency;
         }

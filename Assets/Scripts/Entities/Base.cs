@@ -1,5 +1,6 @@
 ﻿using Controllers;
 using Interfaces;
+using Managers;
 using UnityEngine;
 
 namespace Entities
@@ -8,7 +9,7 @@ namespace Entities
     {
         private int _health, _timeToRecover, _constHealthRecover, _constGoldProduction, _timeToProduceGold;
         private float _healthTimer,_goldTimer;
-        public void Start()
+        private new void Start()
         {
             _health = Game.PlayerPersistentData.BaseHealth;
             _timeToRecover = Game.PlayerPersistentData.TimeToRecover;

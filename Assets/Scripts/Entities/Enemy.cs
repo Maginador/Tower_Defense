@@ -32,7 +32,7 @@ namespace Entities
         private void GetNewTarget()
         {
             currentWaypoint++;
-            _currentTarget = LevelController.Instance.waypoints[currentWaypoint].position;
+            _currentTarget = LevelController.Instance.GetWaypoint(currentWaypoint).position;
             
         }
 
@@ -40,7 +40,7 @@ namespace Entities
         {
             if (Vector3.Distance(_currentTarget, transform.position) < Threshold)
             {
-                if(currentWaypoint <= LevelController.Instance.waypoints.Count-2)
+                if(currentWaypoint <= LevelController.Instance.GetWaupointsCount()-2)
                 {
                     GetNewTarget();
                 }

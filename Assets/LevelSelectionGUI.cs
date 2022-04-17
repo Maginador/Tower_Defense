@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +11,23 @@ public class LevelSelectionGUI : MonoBehaviour
     [SerializeField] private LevelData[] levelDataList;
     [SerializeField] private Text description, levelName;
     [SerializeField] private GameObject[] stars;
+    [SerializeField] private GameObject[] levels;
 
     private LevelData _currentData; 
     // Start is called before the first frame update
-    
+
+    public void OnEnable()
+    {
+        CheckCurrentLevel();
+    }
+
+    private void CheckCurrentLevel()
+    {
+        //TODO: get currenty level from backend instead of playerprefs
+        var curLevel = PlayerPrefs.GetInt("CurrentLevel",0);
+
+    }
+
     public void Play()
     {
         Game.RunLevel(_currentData);

@@ -7,13 +7,13 @@ public class PlayerPersistentData
    //Add list of boosts 
    //Add list of stats 
    //Add list of power ups 
-   public int _initialGold;
-   public TowerData[] towers;
+   [field: SerializeField] public int InitialGold { get; }
+   [SerializeField] private TowerData[] _towers;
 
    public PlayerPersistentData(TowerData[] data, int initialGold)
    {
-      towers = data;
-      _initialGold = initialGold;
+      _towers = data;
+      InitialGold = initialGold;
       BaseHealth = 5;
       TimeToRecover = 120;
       ConstantHealthRecovered = 1;
@@ -47,4 +47,9 @@ public class PlayerPersistentData
    public int HardCurrency { get; set; }
    public int Experience { get; private set; }
    public int Level { get; set; }
+
+   public TowerData GetTower(int tower)
+   {
+      return _towers[tower];
+   }
 }

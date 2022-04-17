@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entities;
+using Managers;
 using ScriptableObjects;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.WSA;
@@ -10,15 +12,15 @@ namespace Controllers
 {
     public class LevelController : MonoBehaviour
     {
-        public LevelData data;
-        public GameObject[] floor;
-        public Color[] colorTable;
-        public GameObject startPoint;
-        public Camera viewCamera;
-        public int startPointIndex;
-        public GameObject waypoint;
-        public List<Transform> waypoints;
-        public static LevelController Instance;
+        [field: SerializeField] public LevelData Data { get; private set; }
+        [SerializeField] private GameObject[] floor;
+        [SerializeField] private Color[] colorTable;
+        [field: SerializeField] public GameObject StartPoint { get; private set; }
+        [SerializeField] private Camera viewCamera;
+        [SerializeField] private int startPointIndex;
+        [SerializeField] private GameObject waypoint;
+        [SerializeField] private List<Transform> waypoints;
+         public static LevelController Instance;
         private UnityEvent _onWaveChanged;
         private UnityEvent _onEnemiesQuantityChanged;
 
@@ -37,6 +39,7 @@ namespace Controllers
                 Destroy(Instance);
             }
             Instance = this;
+            Data = Game.GetCurrentLevel();
             _onWaveChanged = new UnityEvent();
             _onEnemiesQuantityChanged = new UnityEvent();
             PrepareLevel();
@@ -45,15 +48,15 @@ namespace Controllers
         public void PrepareLevel()
         {
             
-            _width = data.levelMap.width;
-            _height = data.levelMap.height;
+            _width = Data.levelMap.width;
+            _height = Data.levelMap.height;
             _levelMatrix = new int[_width, _height];
             SetCameraInitialPosition();
             for (int i = 0; i < _width; i++)
             {
                 for (int o = 0; o < _height; o++)
                 {
-                    var tile = SelectTile(data.levelMap.GetPixel(i, o));
+                    var tile = SelectTile(Data.levelMap.GetPixel(i, o));
                     _levelMatrix[i, o] = tile;
                     if (tile == Tiles.SpawnSpot)
                     {
@@ -90,7 +93,7 @@ namespace Controllers
             obj.name = x + " , " + y;
             if (tile == Tiles.SpawnSpot)
             {
-                startPoint = obj;
+                StartPoint = obj;
             }else if (tile == Tiles.EndSpot)
             {
                 PlayerData.Instance.baseEntity = obj.GetComponent<Base>();
@@ -103,10 +106,10 @@ namespace Controllers
             //TODO create a helper call to fix broken level textures (textures that do not have complete paths for example) 
             var y = Mathf.FloorToInt(startPointIndex / (float)_height);
             var x = startPointIndex % _height;
-            var a = _levelMatrix[x, y+1];
-            var b = _levelMatrix[x, y-1];
-            var c = _levelMatrix[x+1, y];
-            var d = _levelMatrix[x-1, y];
+            var a = 0; if(y+1 <_height) a =_levelMatrix[x, y+1];
+            var b = 0; if(y-1> 0) b =_levelMatrix[x, y-1];;
+            var c = 0;  if(x+1 <_width) c =_levelMatrix[x+1, y];
+            var d = 0; if(x-1> 0) d =_levelMatrix[x-1, y]; 
 
             var next = a == Tiles.Path ? x+(y+1)*_height : b == Tiles.Path ? x  +(y-1)*_height : c == Tiles.Path ? x  +1+(y*_height) : d == Tiles.Path ? x -1 +(y*_height) : -1;
             CheckNeighbours(next);
@@ -124,10 +127,10 @@ namespace Controllers
             _levelMatrix[x, y] = -1;
             SpawnWaypoint(x,y);
 
-            var a = _levelMatrix[x, y+1];
-            var b = _levelMatrix[x, y-1];
-            var c = _levelMatrix[x+1, y];
-            var d = _levelMatrix[x-1, y];
+            var a = 0; if(y+1 <_height) a =_levelMatrix[x, y+1];
+            var b = 0; if(y-1> 0) b =_levelMatrix[x, y-1];;
+            var c = 0;  if(x+1 <_width) c =_levelMatrix[x+1, y];
+            var d = 0; if(x-1> 0) d =_levelMatrix[x-1, y]; 
             if (a == Tiles.Path)
             {
                 CheckNeighbours(x  +(y+1)*_height);
@@ -196,7 +199,17 @@ namespace Controllers
 
         public int GetMaxWaves()
         {
-            return data.waves;
+            return Data.waves;
+        }
+
+        public Transform GetWaypoint(int currentWaypoint)
+        {
+            return waypoints[currentWaypoint];
+        }
+
+        public int GetWaupointsCount()
+        {
+            return waypoints.Count;
         }
     }
 
