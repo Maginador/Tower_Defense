@@ -22,5 +22,9 @@ public class Game : MonoBehaviour
     }
 
     public static PlayerPersistentData PlayerPersistentData { get; set; }
-    
+
+    public static void RunLevel(LevelData currentData)
+    {
+        throw new NotImplementedException();
+    }
 }

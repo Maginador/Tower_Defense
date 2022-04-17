@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c31f3664970f8476ba15e97277934f77, type: 3}
-  m_Name: Level1
+  m_Name: Level4
   m_EditorClassIdentifier: 
   levelMap: {fileID: 2800000, guid: 6590eee6a1b7d4220a66a25b0309fd93, type: 3}
   waves: 4
@@ -19,6 +19,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f22e44ddae7f4ccaa4501a63dc79d8c, type: 2}
   midBosses: 0
   boss: 0
-  description: This is the first battle to hold your ground! Don't think about losing
-    it!
-  levelName: The beginning
+  description: You naild the BigBoss champion, now he is really mad!
+  levelName: Boom!

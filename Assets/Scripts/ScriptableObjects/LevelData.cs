@@ -11,6 +11,7 @@ namespace ScriptableObjects
         public EnemyData[] enemiesInLevel;
         public int midBosses;
         public int boss;
-
+        public string description;
+        public string levelName;
     }
 }
