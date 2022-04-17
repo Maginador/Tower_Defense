@@ -48,8 +48,30 @@ public class PlayerPersistentData
    public int Experience { get; private set; }
    public int Level { get; set; }
 
+   public string PlayerId { get; set; }
    public TowerData GetTower(int tower)
    {
       return _towers[tower];
+   }
+
+   public string GetID()
+   {
+      if (string.IsNullOrEmpty(PlayerId))
+      {
+         PlayerId = SystemInfo.deviceUniqueIdentifier.ToString();
+      }
+
+      return PlayerId;
+   }
+
+   public void GainXp(int xp)
+   {
+      Experience += xp;
+   }
+
+   public void GainRewards(int[] rewards)
+   {
+      SoftCurrency += rewards[0];
+      HardCurrency += rewards[1];
    }
 }

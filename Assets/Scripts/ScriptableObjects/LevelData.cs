@@ -7,11 +7,11 @@ namespace ScriptableObjects
     {
         public Texture2D levelMap;
         public int waves;
-        public int[] enemiesPerWave;
         public EnemyData[] enemiesInLevel;
         public int midBosses;
         public int boss;
         public string description;
         public string levelName;
+        public int id;
     }
 }

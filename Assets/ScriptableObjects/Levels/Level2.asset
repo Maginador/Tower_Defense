@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelMap: {fileID: 2800000, guid: c5d8244d3a16d4d9b83afa9f1400be12, type: 3}
   waves: 8
-  enemiesPerWave: 050000000a0000000f0000001e0000001e0000001e0000001e0000001e000000
   enemiesInLevel:
   - {fileID: 11400000, guid: 4f22e44ddae7f4ccaa4501a63dc79d8c, type: 2}
   midBosses: 0
   boss: 0
   description: Here things get messy, but it is still a piece of cake!
   levelName: 'Round Two '
+  id: 1

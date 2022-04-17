@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelMap: {fileID: 2800000, guid: 99f0b60c927b94920ab92584c9e9e4a5, type: 3}
   waves: 10
-  enemiesPerWave: 050000000a0000000f0000001e0000001e0000001e0000001e0000001e0000001e0000001e000000
   enemiesInLevel:
   - {fileID: 11400000, guid: 4f22e44ddae7f4ccaa4501a63dc79d8c, type: 2}
   midBosses: 0
   boss: 0
   description: You naild the BigBoss champion, now he is really mad!
   levelName: Boom!
+  id: 3
